@@ -3,136 +3,348 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Football Store</title>
+<title>Ultra Football</title>
 <style>
   body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #000; /* Black background */
-    color: #fff; /* White text for contrast */
+    background-color: #fff; /* white background */
+    color: #000;
   }
+  /* Header styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f2f2f2;
+  border-bottom: 2px solid #ccc;
+  flex-wrap: wrap;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  height: 50px;
+  margin-right: 10px;
+}
+.store-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+nav a:hover {
+  color: #007bff;
+}
 
-  header {
-    background-color: #c00; /* Red header */
-    padding: 20px;
-    text-align: center;
-  }
+/* Sections */
+section {
+  display: none;
+  padding: 20px;
+}
+section.active {
+  display: block;
+}
 
-  header h1 {
-    margin: 0;
-    font-size: 2em;
-  }
+/* Home page styles */
+.home-welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  font-size: 3em;
+  font-weight: bold;
+  text-align: center;
+}
+.boot-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  padding: 20px;
+}
+.boot-images img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s;
+}
+.boot-images img:hover {
+  transform: scale(1.05);
+}
 
-  .welcome-message {
-    margin: 20px 0;
-    text-align: center;
-    font-size: 1.5em;
-  }
-
-  .cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-  }
-
-  .card {
-    background-color: #222; /* Dark gray for cards */
-    border: 2px solid #c00; /* Red border */
-    border-radius: 10px;
-    width: 250px;
-    text-align: center;
-    padding: 15px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  }
-
-  .card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-
-  .card h3 {
-    margin-top: 10px;
-  }
-
-  footer {
-    background-color: #c00; /* Red footer */
-    padding: 15px;
-    text-align: center;
-    font-size: 0.9em;
-  }
-
-  /* Responsive adjustments */
-  @media(max-width: 800px){
-    .cards-container {
-      flex-direction: column;
-      align-items: center;
-    }
-  }
+/* Product grid styles */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+.product-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+#cart-items div {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
 </style>
 </head>
 <body>
+
+<!-- Header with navigation -->
 <header>
-  <h1>Welcome to the Football Store!</h1>
+  <div class="logo-container">
+    <!-- Placeholder logo, replace src with your logo image URL -->
+    <img src="https://img.icons8.com/ios-filled/50/000000/soccer-ball.png" alt="Soccer Logo" class="logo" />
+    <h1 class="store-name">Ultra Football</h1> <!-- Change store name here -->
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#" data-section="home">Home</a></li>
+      <li><a href="#" data-section="products">Products</a></li>
+      <li><a href="#" data-section="contact">Contact</a></li>
+      <li><a href="#" data-section="cart">Cart (<span id="cart-count">0</span>)</a></li>
+    </ul>
+  </nav>
 </header>
 
-<div class="welcome-message">
-  <p>Gear up with the best jerseys, cleats, and accessories! Enjoy shopping with us.</p>
-</div>
+<!-- Home Section -->
+<section id="home" class="active">
+  <div class="home-welcome">
+    Welcome
+  </div>
+  <div class="boot-images">
+    <!-- Replace these images with your own soccer boots images -->
+    <img src="https://images.unsplash.com/photo-1609439600270-5f8d1a2458b2?ixlib=rb-4.0.8&auto=format&fit=crop&w=800&q=80" alt="Boot 1" />
+    <img src="https://images.unsplash.com/photo-1617047671138-4b4c4a0f292f?ixlib=rb-4.0.8&auto=format&fit=crop&w=800&q=80" alt="Boot 2" />
+    <img src="https://images.unsplash.com/photo-1606840588578-d8b7f6a4b6f7?ixlib=rb-4.0.8&auto=format&fit=crop&w=800&q=80" alt="Boot 3" />
+    <img src="https://images.unsplash.com/photo-1606840588578-d8b7f6a4b6f7?ixlib=rb-4.0.8&auto=format&fit=crop&w=800&q=80" alt="Boot 4" />
+  </div>
+</section>
 
-<div class="cards-container">
-  <!-- Cart Size Measurement -->
-  <div class="card" id="cartSize">
-    <img src="https://images.unsplash.com/photo-1609439600270-5f8d1a2458b2?ixlib=rb-4.0.8&auto=format&fit=crop&w=800&q=80" alt="Cart Size Measurement" />
-    <h3>Cart Size Measurement</h3>
-    <p>Measure your perfect fit!</p>
-  </div>
-  <!-- Football Jerseys -->
-  <div class="card" id="jerseys">
-    <img src="https://images.unsplash.com/photo-1617047671138-4b4c4a0f292f?ixlib=rb-4.0.8&auto=format&fit=crop&w=800&q=80" alt="Football Jerseys" />
-    <h3>Football Jerseys</h3>
-    <p>Shop our latest jerseys</p>
-  </div>
-  <!-- Football Cleats -->
-  <div class="card" id="cleats">
-    <img src="https://images.unsplash.com/photo-1606840588578-d8b7f6a4b6f7?ixlib=rb-4.0.8&auto=format&fit=crop&w=800&q=80" alt="Football Cleats" />
-    <h3>Football Cleats</h3>
-    <p>Find your perfect cleats</p>
-  </div>
-</div>
+<!-- Products Page -->
+<section id="products">
+  <h2>Soccer Products</h2>
+  <button onclick="showCategory('boots')">Boots</button>
+  <button onclick="showCategory('kits')">Kits</button>
+  <button onclick="showCategory('balls')">Balls</button>
+  <div id="product-list" class="products-grid"></div>
+</section>
 
-<footer>
-  <p>Contact us: +1-234-567-8901 | email@footballstore.com</p>
-  <p>Operating Days: Monday - Friday</p>
-</footer>
+<!-- Boots Category -->
+<section id="category-boots" style="display:none;">
+  <h3>Soccer Boots</h3>
+  <div class="products-grid" id="boots-list">
+    <!-- Example product -->
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1609439600270-5f8d1a2458b2?ixlib=rb-4.0.8&auto=format&fit=crop&w=800&q=80" alt="Nike Phantom GX2" />
+      <h4>Nike Phantom GX2 - $150</h4>
+      <button onclick='addProductToCart("Nike Phantom GX2", 150)'>Add to Cart</button>
+    </div>
+    <!-- Add more boots with your images and prices -->
+  </div>
+</section>
+
+<!-- Kits Category -->
+<section id="category-kits" style="display:none;">
+  <h3>Soccer Kits</h3>
+  <div class="products-grid" id="kits-list">
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1607592732128-75052c8d5da7?ixlib=rb-4.0.8&auto=format&fit=crop&w=800&q=80" alt="Liverpool Kit" />
+      <h4>Liverpool Home Kit - $80</h4>
+      <button onclick='addProductToCart("Liverpool Home Kit", 80)'>Add to Cart</button>
+    </div>
+    <!-- Add more kits here -->
+  </div>
+</section>
+
+<!-- Balls Category -->
+<section id="category-balls" style="display:none;">
+  <h3>Soccer Balls</h3>
+  <div class="products-grid" id="balls-list">
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1606840588578-d8b7f6a4b6f7?ixlib=rb-4.0.8&auto=format&fit=crop&w=800&q=80" alt="Soccer Ball 1" />
+      <h4>Soccer Ball 1 - $30</h4>
+      <button onclick='addProductToCart("Soccer Ball 1", 30)'>Add to Cart</button>
+    </div>
+    <!-- Add more balls as needed -->
+  </div>
+</section>
+
+<!-- Contact Page -->
+<section id="contact" style="display:none;">
+  <h2>Contact Us</h2>
+  <p>Email: 83137hsh2@gmail.com</p>
+  <p>Phone: +73 372 434 483</p>
+  <p>Operating Days: Monday - Saturday</p>
+</section>
+
+<!-- Cart Page -->
+<section id="cart">
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <button id="checkout-button" onclick="showCheckout()">Checkout</button>
+</section>
+
+<!-- Checkout Form -->
+<section id="checkout-section" style="display:none;">
+  <h3>Enter Your Details</h3>
+  <label>Name:</label><br/>
+  <input type="text" id="name" required /><br/>
+  <label>Email:</label><br/>
+  <input type="email" id="email" required /><br/>
+  <label>Address:</label><br/>
+  <textarea id="address" required></textarea><br/>
+  <button onclick="completePurchase()">Complete Purchase</button>
+</section>
 
 <script>
-  // Replace these with your actual webpage links
-  const links = {
-    cartSize: 'https://yourwebsite.com/cart-size', // Replace with your link
-    jerseys: 'https://yourwebsite.com/jerseys',  // Replace with your link
-    cleats: 'https://yourwebsite.com/cleats'      // Replace with your link
+  // Navigation handling
+  const sections = document.querySelectorAll('section');
+  function showSection(id) {
+    sections.forEach(sec => {
+      sec.classList.remove('active');
+    });
+    document.getElementById(id).classList.add('active');
+  }
+
+  document.querySelectorAll('nav a').forEach(link => {
+    link.onclick = (e) => {
+      e.preventDefault();
+      const sectionId = link.getAttribute('data-section') || link.getAttribute('href').substring(1);
+      if (sectionId === 'cart') {
+        showSection('cart');
+        populateCart();
+      } else if (sectionId === 'home') {
+        showSection('home');
+      } else if (sectionId === 'products') {
+        showSection('products');
+      } else if (sectionId === 'contact') {
+        showSection('contact');
+      } else if (sectionId === 'category-boots') {
+        showCategory('boots');
+      } else if (sectionId === 'category-kits') {
+        showCategory('kits');
+      } else if (sectionId === 'category-balls') {
+        showCategory('balls');
+      }
+    };
+  });
+
+  // Show category products
+  function showCategory(category) {
+    document.getElementById('category-boots').style.display='none';
+    document.getElementById('category-kits').style.display='none';
+    document.getElementById('category-balls').style.display='none';
+
+    if(category==='boots'){
+      document.getElementById('category-boots').style.display='block';
+      showSection('category-boots');
+    } else if (category==='kits') {
+      document.getElementById('category-kits').style.display='block';
+      showSection('category-kits');
+    } else if (category==='balls') {
+      document.getElementById('category-balls').style.display='block';
+      showSection('category-balls');
+    }
+  }
+
+  // Cart management
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  function updateCartCount() {
+    document.getElementById('cart-count').innerText = cart.length;
+  }
+
+  function addProductToCart(name, price) {
+    cart.push({name, price});
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    alert(`${name} added to cart`);
+  }
+
+  function populateCart() {
+    const container = document.getElementById('cart-items');
+    container.innerHTML = '';
+    if (cart.length === 0) {
+      container.innerHTML = '<p>Your cart is empty.</p>';
+      document.getElementById('checkout-button').style.display='none';
+      return;
+    }
+    let total = 0;
+    cart.forEach((item, index) => {
+      total += item.price;
+      const div = document.createElement('div');
+      div.innerHTML = `
+        <p>${item.name} - $${item.price}</p>
+        <button onclick="removeFromCart(${index})">Remove</button>
+      `;
+      container.appendChild(div);
+    });
+    document.getElementById('checkout-button').style.display='block';
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index,1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    populateCart();
+    updateCartCount();
+  }
+
+  function showCheckout() {
+    document.getElementById('checkout-section').style.display='block';
+  }
+
+  function completePurchase() {
+    if(!document.getElementById('name').value || !document.getElementById('email').value || !document.getElementById('address').value) {
+      alert('Please fill in all fields');
+      return;
+    }
+    alert('Thank you for your purchase!');
+    localStorage.removeItem('cart');
+    cart = [];
+    updateCartCount();
+    populateCart();
+    document.getElementById('checkout-section').style.display='none';
+  }
+
+  // Initialize
+  window.onload = () => {
+    updateCartCount();
+    populateCart();
   };
-
-  document.getElementById('cartSize').addEventListener('click', () => {
-    window.location.href = links.cartSize;
-  });
-
-  document.getElementById('jerseys').addEventListener('click', () => {
-    window.location.href = links.jerseys;
-  });
-
-  document.getElementById('cleats').addEventListener('click', () => {
-    window.location.href = links.cleats;
-  });
 </script>
+
 </body>
 </html>
