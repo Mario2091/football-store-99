@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Taha's Football 101</title>
 <style>
-  /* =========== VARIABLES & BASE =========== */
   :root {
     --neon-red: #ff003c;
     --neon-dark: #0a0a0a;
@@ -42,8 +41,6 @@
   button:hover {
     background: #ff1a4d;
   }
-
-  /* =========== BACKGROUND ANIMATION =========== */
   body {
     background: linear-gradient(-45deg, #330000, #440000, #220000, #550000);
     background-size: 400% 400%;
@@ -55,7 +52,6 @@
     100% {background-position:0% 50%;}
   }
 
-  /* =========== INTRO SCREEN =========== */
   #intro {
     position: fixed;
     inset: 0;
@@ -120,7 +116,6 @@
     100% {transform: translateY(-15px);}
   }
 
-  /* =========== NAVIGATION =========== */
   nav {
     position: sticky;
     top: 0;
@@ -157,7 +152,6 @@
     text-shadow: 0 0 8px #ff4d4d;
   }
 
-  /* =========== MAIN SECTIONS =========== */
   main {
     padding: 3rem 2rem 6rem;
     max-width: 1200px;
@@ -165,6 +159,10 @@
   }
   section {
     margin-bottom: 4rem;
+    display: none;
+  }
+  section.active {
+    display: block;
   }
   h2 {
     font-size: 2.5rem;
@@ -173,16 +171,18 @@
     text-shadow: 0 0 15px var(--neon-red);
   }
 
-  /* =========== HOME PAGE =========== */
+  /* HOME */
   #home {
     height: 70vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     font-size: 4rem;
     color: white;
     position: relative;
     user-select: none;
+    text-align: center;
   }
   #home::before {
     content: "";
@@ -192,7 +192,7 @@
     opacity: 0.05;
     pointer-events: none;
   }
-  #home span {
+  #home span.main-welcome {
     position: relative;
     text-shadow:
       0 0 10px #ff003c,
@@ -200,7 +200,14 @@
       0 0 40px #ff3366,
       0 0 80px #ff003c;
   }
-  /* Boots floating behind the Welcome text */
+  #home p.welcome-sub {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    max-width: 600px;
+    font-weight: 600;
+    color: #ff4d4d;
+    text-shadow: 0 0 8px #ff003c;
+  }
   #home .boot-bg {
     position: absolute;
     width: 80px;
@@ -213,7 +220,7 @@
   #home .boot4 { bottom: 20%; right: 20%; animation-delay: 3s; }
   #home .boot5 { top: 40%; left: 50%; animation-delay: 4s; }
 
-  /* =========== PRODUCTS GRID =========== */
+  /* PRODUCTS GRID */
   .products {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
@@ -243,6 +250,7 @@
     margin-bottom: 0.3rem;
     font-size: 1.25rem;
     color: #ff4d4d;
+    text-align: center;
   }
   .product-card p {
     margin-bottom: 0.6rem;
@@ -263,7 +271,7 @@
     width: 100%;
   }
 
-  /* =========== CART SECTION =========== */
+  /* CART */
   #cart-items {
     max-height: 320px;
     overflow-y: auto;
@@ -329,7 +337,7 @@
     font-size: 1.1rem;
   }
 
-  /* =========== CONTACT PAGE =========== */
+  /* CONTACT */
   #contact .contact-info {
     font-size: 1.8rem;
     font-weight: 900;
@@ -338,7 +346,35 @@
     text-shadow: 0 0 15px #ff003c;
   }
 
-  /* =========== RESPONSIVE =========== */
+  /* REVIEWS */
+  #reviews {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .review-card {
+    background: #1a1a1a;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(255, 0, 60, 0.5);
+  }
+  .reviewer-name {
+    font-weight: 900;
+    color: #ff4d4d;
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+  .review-stars {
+    color: #ff003c;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .review-text {
+    font-size: 1rem;
+    font-style: italic;
+  }
+
+  /* RESPONSIVE */
   @media (max-width: 600px) {
     nav ul {
       gap: 0.8rem;
@@ -371,20 +407,22 @@
 <nav>
   <div class="logo">Taha's Football 101</div>
   <ul id="nav-links">
-    <li><a href="#home" class="active">Home</a></li>
-    <li><a href="#boots">Boots</a></li>
-    <li><a href="#jerseys">Jerseys</a></li>
-    <li><a href="#balls">Balls</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#cart">Cart (<span id="cart-count">0</span>)</a></li>
+    <li><a href="#" data-target="home" class="active">Home</a></li>
+    <li><a href="#" data-target="boots">Boots</a></li>
+    <li><a href="#" data-target="jerseys">Jerseys</a></li>
+    <li><a href="#" data-target="balls">Balls</a></li>
+    <li><a href="#" data-target="reviews">Reviews</a></li>
+    <li><a href="#" data-target="contact">Contact</a></li>
+    <li><a href="#" data-target="cart">Cart (<span id="cart-count">0</span>)</a></li>
   </ul>
 </nav>
 
 <!-- MAIN CONTENT -->
 <main>
   <!-- HOME -->
-  <section id="home">
-    <span>Welcome</span>
+  <section id="home" class="active" aria-label="Home page">
+    <span class="main-welcome">Welcome</span>
+    <p class="welcome-sub">Welcome to the best store in whole of Australia, with everything you need to purchase whatever you desire</p>
     <img src="https://cdn-icons-png.flaticon.com/512/3039/3039439.png" alt="Boot" class="boot-bg boot1" />
     <img src="https://cdn-icons-png.flaticon.com/512/3039/3039439.png" alt="Boot" class="boot-bg boot2" />
     <img src="https://cdn-icons-png.flaticon.com/512/3039/3039439.png" alt="Boot" class="boot-bg boot3" />
@@ -393,25 +431,31 @@
   </section>
 
   <!-- BOOTS -->
-  <section id="boots">
+  <section id="boots" aria-label="Boots for sale">
     <h2>Boots</h2>
     <div class="products" id="boots-list"></div>
   </section>
 
   <!-- JERSEYS -->
-  <section id="jerseys">
+  <section id="jerseys" aria-label="Jerseys for sale">
     <h2>Jerseys</h2>
     <div class="products" id="jerseys-list"></div>
   </section>
 
   <!-- BALLS -->
-  <section id="balls">
+  <section id="balls" aria-label="Balls for sale">
     <h2>Balls</h2>
     <div class="products" id="balls-list"></div>
   </section>
 
+  <!-- REVIEWS -->
+  <section id="reviews" aria-label="Customer Reviews">
+    <h2>Customer Reviews</h2>
+    <div id="reviews-list"></div>
+  </section>
+
   <!-- CART -->
-  <section id="cart">
+  <section id="cart" aria-label="Shopping Cart">
     <h2>Your Cart</h2>
     <div id="cart-items"></div>
     <h3>Total: $<span id="cart-total">0</span></h3>
@@ -425,25 +469,25 @@
   </section>
 
   <!-- CONTACT -->
-  <section id="contact">
+  <section id="contact" aria-label="Contact Information">
     <h2>Contact Us</h2>
     <div class="contact-info">
-      <p>Email: <a href="mailto:83137hsh2@gmail.com" style="color:#ff4d4d;">83137hsh2@gmail.com</a></p>
-      <p>Phone: <a href="tel:+73372434843" style="color:#ff4d4d;">+73 372 434 483</a></p>
-      <p>Operating Days: Monday - Saturday</p>
+      <p>Email: <a href="mailto:83137hsh2gmail.com">83137hsh2gmail.com</a></p>
+      <p>Phone: +73 372 434 483</p>
+      <p>Operating Days: Monday to Saturday</p>
     </div>
   </section>
 </main>
 
 <script>
-  // ============ DATA SETUP ============
+  // ============ PRODUCT DATA ============
   const products = {
     boots: [
-      {name: "Nike Phantom GX 2 Elite", price: 250, img: "https://www.rebelsport.com.au/on/demandware.static/-/Sites-rsg-master-catalog/default/dw9f3d6d1c/images/67932101/Rebel_67932101_bluewhite_hi-res.jpg", link:"https://www.rebelsport.com.au/p/nike-phantom-gx-2-elite-football-boots-M69207101.html"},
-      {name: "Nike Phantom GX Club", price: 120, img: "https://www.rebelsport.com.au/on/demandware.static/-/Sites-rsg-master-catalog/default/dw32c1f708/images/66426901/Rebel_66426901_black_hi-res.jpg", link:"https://www.rebelsport.com.au/p/nike-phantom-gx-club-football-boots-M66426901.html"},
-      {name: "Puma Ultra Match", price: 150, img: "https://www.rebelsport.com.au/on/demandware.static/-/Sites-rsg-master-catalog/default/dw88d64d54/images/65558801/Rebel_65558801_blackwhite_hi-res.jpg", link:"https://www.rebelsport.com.au/p/puma-ultra-match-football-boots-M65558801.html"},
-      {name: "Adidas F50 Elite", price: 200, img: "https://www.rebelsport.com.au/on/demandware.static/-/Sites-rsg-master-catalog/default/dwa32d4371/images/70476801/Rebel_70476801_hi-res.jpg", link:"https://www.rebelsport.com.au/p/adidas-f50-elite-football-boots-M70476801.html"},
-      {name: "Puma King Pro Brilliance", price: 180, img: "https://www.rebelsport.com.au/on/demandware.static/-/Sites-rsg-master-catalog/default/dwb86f0418/images/69187801/Rebel_69187801_whiteblack_hi-res.jpg", link:"https://www.rebelsport.com.au/p/puma-king-pro-brilliance-womens-football-boots-M69187801.html"},
+      {name: "Nike Phantom GX 2 Elite", price: 250, img: "https://www.rebelsport.com.au/on/demandware.static/-/Sites-rsg-master-catalog/default/dw986b2f29/images/69207101/Rebel_69207101_blue_hi-res.jpg", link:"https://www.rebelsport.com.au/p/nike-phantom-gx-2-elite-football-boots-M69207101.html"},
+      {name: "Nike Phantom GX Club", price: 150, img: "https://www.rebelsport.com.au/on/demandware.static/-/Sites-rsg-master-catalog/default/dw529f4d92/images/66426901/Rebel_66426901_black_hi-res.jpg", link:"https://www.rebelsport.com.au/p/nike-phantom-gx-club-football-boots-M66426901.html"},
+      {name: "Puma Ultra Match", price: 175, img: "https://www.rebelsport.com.au/on/demandware.static/-/Sites-rsg-master-catalog/default/dw88e3bb43/images/65558801/Rebel_65558801_black_hi-res.jpg", link:"https://www.rebelsport.com.au/p/puma-ultra-match-football-boots-M65558801.html"},
+      {name: "Adidas F50 Elite", price: 200, img: "https://www.rebelsport.com.au/on/demandware.static/-/Sites-rsg-master-catalog/default/dw42f04d6f/images/70476801/Rebel_70476801_white_hi-res.jpg", link:"https://www.rebelsport.com.au/p/adidas-f50-elite-football-boots-M70476801.html"},
+      {name: "Puma King Pro Brilliance", price: 230, img: "https://www.rebelsport.com.au/on/demandware.static/-/Sites-rsg-master-catalog/default/dwb86f0418/images/69187801/Rebel_69187801_whiteblack_hi-res.jpg", link:"https://www.rebelsport.com.au/p/puma-king-pro-brilliance-womens-football-boots-M69187801.html"},
       {name: "Adidas Predator Club Kids", price: 75, img: "https://www.rebelsport.com.au/on/demandware.static/-/Sites-rsg-master-catalog/default/dw7981d0b4/images/68054401/Rebel_68054401_black_hi-res.jpg", link:"https://www.rebelsport.com.au/p/adidas-predator-club-kids-football-boots-M68054401.html"}
     ],
     jerseys: [
@@ -463,24 +507,54 @@
     ]
   };
 
-  // ============ RENDER PRODUCTS ============
+  // ============ REVIEWS DATA ============
+  const reviews = [
+    {name:"Judith Harris", text:"Amazing selection and top quality! Absolutely love the boots I bought."},
+    {name:"Samuel Chan", text:"Fast shipping and great customer service. Highly recommend!"},
+    {name:"Hattie Aguilar", text:"The jerseys are fantastic and fit perfectly."},
+    {name:"Milo Wright", text:"Best football store in Australia, hands down."},
+    {name:"Lily Giles", text:"Five stars for quality and price. Will buy again!"},
+    {name:"Kole Payne", text:"Love the variety of sizes and styles."},
+    {name:"London Donovan", text:"The balls feel great and look awesome."},
+    {name:"Brayan Adkins", text:"Excellent website design and easy checkout."},
+    {name:"Emelia Mejia", text:"Customer support was very helpful and friendly."},
+    {name:"Atticus Harding", text:"My go-to for football gear now."},
+    {name:"Aniya Salazar", text:"Perfect fit and fast delivery."},
+    {name:"Brody Sosa", text:"Fantastic quality on all products."},
+    {name:"Cassandra Love", text:"Best prices for boots and jerseys."},
+    {name:"Jeffrey Bass", text:"Smooth checkout process and great products."},
+    {name:"Zahra Benton", text:"I keep coming back for more, highly recommend."},
+    {name:"Jamal Gill", text:"The size meter helped me pick the perfect size."},
+    {name:"Jordan Patrick", text:"Quality items and reliable delivery times."},
+    {name:"Derrick Huff", text:"Great range and excellent prices."},
+    {name:"Karsyn Meadows", text:"The neon design on the site is really cool."},
+    {name:"Wayne Conley", text:"My team loves these kits!"}, 
+    {name:"Salem Wilcox", text:"The cart system is easy to use and smooth."},
+    {name:"Jerry Allen", text:"Highly satisfied with my purchase."},
+    {name:"Riley Burnett", text:"Superb selection of football gear."},
+    {name:"Davis Davis", text:"Perfect experience from start to finish."},
+    {name:"Mia Bruce", text:"Will recommend to all my friends."}
+  ];
+
+  // ============ RENDERING PRODUCTS ============
   function createProductCard(product, category, index) {
     const card = document.createElement('div');
     card.classList.add('product-card');
     card.innerHTML = `
-      <a href="${product.link}" target="_blank" rel="noopener noreferrer">
-        <img src="${product.img}" alt="${product.name}" />
+      <a href="${product.link}" target="_blank" rel="noopener noreferrer" aria-label="View ${product.name} details">
+        <img src="${product.img}" alt="${product.name}" loading="lazy" />
       </a>
       <h3>${product.name}</h3>
       <p>$${product.price}</p>
       ${category !== 'balls' ? `
-      <select aria-label="Select size for ${product.name}" data-cat="${category}" data-index="${index}">
+      <label for="size-${category}-${index}" class="visually-hidden">Select size for ${product.name}</label>
+      <select id="size-${category}-${index}" aria-label="Select size for ${product.name}" data-cat="${category}" data-index="${index}">
         <option value="">Select Size</option>
         <option value="S">Small</option>
         <option value="M">Medium</option>
         <option value="L">Large</option>
       </select>` : ''}
-      <button data-cat="${category}" data-index="${index}">Add to Cart</button>
+      <button data-cat="${category}" data-index="${index}" aria-label="Add ${product.name} to cart">Add to Cart</button>
     `;
     return card;
   }
@@ -502,6 +576,22 @@
     });
     products.balls.forEach((prod, i) => {
       ballsList.appendChild(createProductCard(prod, 'balls', i));
+    });
+  }
+
+  // ============ RENDER REVIEWS ============
+  function renderReviews() {
+    const reviewsList = document.getElementById('reviews-list');
+    reviewsList.innerHTML = '';
+    reviews.forEach(r => {
+      const div = document.createElement('div');
+      div.classList.add('review-card');
+      div.innerHTML = `
+        <div class="reviewer-name">${r.name}</div>
+        <div class="review-stars" aria-label="5 star rating">★★★★★</div>
+        <div class="review-text">"${r.text}"</div>
+      `;
+      reviewsList.appendChild(div);
     });
   }
 
@@ -540,10 +630,10 @@
           <strong>${item.name}</strong> ${item.size ? `(Size: ${item.size})` : ''} - $${item.price.toFixed(2)}
         </div>
         <div class="cart-item-qty">
-          <button class="qty-dec" data-index="${i}">−</button>
+          <button class="qty-dec" data-index="${i}" aria-label="Decrease quantity">−</button>
           <span>${item.quantity}</span>
-          <button class="qty-inc" data-index="${i}">+</button>
-          <button class="remove-item" data-index="${i}" style="background:#550000; margin-left:8px;">x</button>
+          <button class="qty-inc" data-index="${i}" aria-label="Increase quantity">+</button>
+          <button class="remove-item" data-index="${i}" aria-label="Remove item" style="background:#550000; margin-left:8px;">x</button>
         </div>
       `;
       cartItems.appendChild(div);
@@ -555,7 +645,6 @@
     const product = products[category][index];
     let size = '';
     if(category !== 'balls') {
-      // Find select size for this product card
       const selects = document.querySelectorAll(`select[data-cat="${category}"][data-index="${index}"]`);
       if(selects.length === 0) {
         alert('Size selector missing.');
@@ -567,7 +656,6 @@
         return;
       }
     }
-    // Check if item+size exists
     const existingIndex = cart.findIndex(item => item.name === product.name && item.size === size);
     if(existingIndex > -1) {
       cart[existingIndex].quantity += 1;
@@ -580,7 +668,36 @@
     alert(`${product.name} added to cart.`);
   }
 
-  // ============ EVENT LISTENERS ============
+  // ============ NAVIGATION LOGIC ============
+  const navLinks = document.querySelectorAll('#nav-links a');
+  const sections = document.querySelectorAll('main section');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = link.dataset.target;
+
+      // Update active nav
+      navLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+
+      // Show correct section
+      sections.forEach(sec => {
+        if(sec.id === target) {
+          sec.classList.add('active');
+          sec.setAttribute('aria-hidden', 'false');
+        } else {
+          sec.classList.remove('active');
+          sec.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      // Scroll to top on page switch
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+
+  // ============ CART BUTTON LISTENER ============
   document.addEventListener('click', e => {
     if(e.target.tagName === 'BUTTON' && e.target.dataset.cat !== undefined) {
       addToCart(e.target.dataset.cat, e.target.dataset.index);
@@ -607,23 +724,13 @@
     }
   });
 
-  // NAV LINK ACTIVE SWITCH
-  const navLinks = document.querySelectorAll('#nav-links a');
-  navLinks.forEach(link => {
-    link.addEventListener('click', e => {
-      navLinks.forEach(l => l.classList.remove('active'));
-      e.target.classList.add('active');
-    });
-  });
-
-  // CHECKOUT FORM
+  // ============ CHECKOUT FORM ============
   document.getElementById('checkout-form').addEventListener('submit', e => {
     e.preventDefault();
     if(cart.length === 0) {
       alert("Your cart is empty.");
       return;
     }
-    // Simple form validation
     const name = e.target['customer-name'].value.trim();
     const email = e.target['customer-email'].value.trim();
     const phone = e.target['customer-phone'].value.trim();
@@ -633,17 +740,21 @@
       alert("Please fill in all fields.");
       return;
     }
-    // Checkout success simulation
+
     alert(`Thank you for your purchase, ${name}! Your total is $${calculateTotal()}. We will contact you shortly.`);
     cart = [];
     saveCart();
     updateCartCount();
     renderCart();
     e.target.reset();
+
+    // After checkout, go back to home
+    document.querySelector('#nav-links a[data-target="home"]').click();
   });
 
   // ============ INITIALIZE ============
   renderProducts();
+  renderReviews();
   updateCartCount();
   renderCart();
 
