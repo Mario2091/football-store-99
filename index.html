@@ -5,85 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Taha's Football 101</title>
 <style>
-  /* Reset & Base Styles */
+  /* Reset & base styles */
   * { margin:0; padding:0; box-sizing: border-box; }
   body {
-    font-family: 'Arial Rounded MT Bold', 'Helvetica Neue', sans-serif;
-    background: linear-gradient(45deg, #0f0, #00f, #f0f, #ff0, #0ff);
-    background-size: 400% 400%;
-    animation: neonBg 15s linear infinite;
-    color: #fff;
-    min-height: 100vh;
-    overflow-x: hidden;
+    font-family:'Arial Rounded MT Bold','Helvetica Neue',sans-serif;
+    background: linear-gradient(45deg, #00f, #f0f, #ff0, #0ff, #0f0);
+    background-size: 600% 600%;
+    animation: neonBg 20s linear infinite;
+    color:#fff; min-height:100vh; overflow-x:hidden;
   }
   @keyframes neonBg {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
   }
 
-  /* Header and Nav */
+  /* Header & Nav */
 header {
-  display:flex; align-items:center; justify-content:space-between; padding:20px;
-  background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
-  position: sticky; top:0; z-index:999;
+  display:flex; justify-content:space-between; align-items:center; padding:20px; position:sticky; top:0; z-index:999;
+  background:rgba(0,0,0,0.5); backdrop-filter:blur(10px);
 }
-.header-left {
-  display:flex; align-items:center; gap:10px;
-}
-.logo {
-  width:60px; height:60px; border-radius:50%; border:3px solid #f00;
-}
+.header-left { display:flex; align-items:center; gap:10px; }
+.logo { width:60px; height:60px; border-radius:50%; border:3px solid #f00; }
 .store-title {
   font-size:2.5rem; font-weight:700; color:#f00; letter-spacing:2px; text-shadow:0 0 10px #f00;
 }
-nav ul {
-  list-style:none; display:flex; gap:20px;
-}
+nav ul { list-style:none; display:flex; gap:20px; }
 nav a {
-  text-decoration:none; color:#fff; font-size:1.2rem; padding:10px 15px; border-radius:8px;
-  transition: all 0.3s ease;
+  text-decoration:none; font-size:1.2rem; padding:10px 15px; border-radius:8px; transition:all 0.3s ease; color:#fff;
 }
-nav a:hover {
-  background:#f00; box-shadow:0 0 15px #f00 inset;
-}
+nav a:hover { background:#f00; box-shadow:0 0 15px #f00 inset; }
 
-/* Intro overlay with animation */
 #intro {
-  position:fixed; top:0; left:0; width:100%; height:100%; z-index:2000;
-  background:#222; display:flex; align-items:center; justify-content:center; flex-direction:column;
-  font-size:3rem; font-family:'Arial Rounded MT Bold'; color:#fff; padding:20px; text-align:center;
+  position:fixed; top:0; left:0; width:100%; height:100%; background:#222; display:flex; align-items:center; justify-content:center; font-size:3rem; font-family:'Arial Rounded MT Bold'; color:#fff; z-index:2000;
   animation: fadeOut 2s ease 4s forwards;
 }
 @keyframes fadeOut {
   to { opacity:0; visibility:hidden; }
 }
 
-/* Sections styles */
+/* Sections */
 section {
-  display:none; flex-direction:column; align-items:center; justify-content:center; padding:30px;
-  min-height:80vh; transition: all 0.5s ease; width: 100%;
+  display:none; flex-direction:column; align-items:center; justify-content:center; padding:30px; min-height:80vh; width:100%;
 }
 section.active { display:flex; }
 h2 {
-  font-size:2.5rem; margin-bottom:20px; color:#fff; text-shadow:0 0 10px #f00;
+  font-size:3rem; margin-bottom:20px; color:#fff; text-shadow:0 0 10px #f00;
 }
 
-/* Buttons for categories */
+/* Category buttons */
 button.category-btn {
-  background:#111; color:#fff; border:none; padding:12px 20px; margin:10px; font-size:1.2rem;
-  border-radius:10px; cursor:pointer; transition: all 0.3s ease; box-shadow:0 0 10px #f00 inset;
+  background:#111; color:#fff; border:none; padding:12px 20px; margin:10px; font-size:1.2rem; border-radius:10px; cursor:pointer; transition:all 0.3s ease; box-shadow:0 0 10px #f00 inset;
 }
 button.category-btn:hover { background:#f00; box-shadow:0 0 20px #f00 inset; }
 
-/* Product grid styles */
+/* Product grid */
 #product-grid {
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px; width:100%; margin-top:20px;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; width:100%; margin-top:20px;
 }
 .product-card {
-  background:#222; border-radius:15px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.4);
-  display:flex; flex-direction:column; align-items:center; padding:10px; transition: all 0.3s ease; border: 3px solid transparent;
+  background:#222; border-radius:15px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.4); display:flex; flex-direction:column; align-items:center; padding:10px; border:3px solid transparent; transition:all 0.3s ease;
   border-image: linear-gradient(45deg, #f00, #0ff, #f0f, #0f0) 1;
 }
 .product-card:hover { transform:translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,0.6); }
@@ -91,37 +72,33 @@ button.category-btn:hover { background:#f00; box-shadow:0 0 20px #f00 inset; }
 .product-name { margin-top:10px; font-size:1.1rem; font-weight:bold; color:#fff; text-align:center; }
 .product-price { margin:8px 0; font-size:1.3rem; color:#f00; font-weight:bold; }
 .btn-add {
-  background:#111; color:#fff; border:none; padding:10px; width:100%; border-radius:8px; cursor:pointer; margin-top:8px; font-size:1rem;
-  box-shadow:0 0 10px #f00 inset; transition: all 0.3s ease;
+  background:#111; color:#fff; border:none; padding:10px; width:100%; border-radius:8px; cursor:pointer; margin-top:8px; font-size:1rem; box-shadow:0 0 10px #f00 inset; transition:all 0.3s ease;
 }
 .btn-add:hover { background:#f00; box-shadow:0 0 20px #f00 inset; }
 
-/* Cart styles */
-#cart-items { width:100%; max-height:300px; overflow-y:auto; }
+/* Cart & checkout styles */
+#cart-items { width:100%; max-height:300px; overflow-y:auto; margin-top:10px; }
 .cart-item { display:flex; justify-content:space-between; align-items:center; padding:8px; border-bottom:1px solid #555; font-size:1rem; color:#fff; }
 .btn-remove { background:#f00; color:#fff; border:none; padding:4px 10px; border-radius:5px; cursor:pointer; font-size:0.9rem; }
 
-#checkout-section { margin-top:20px; width:100%; max-width:500px; }
+#checkout { margin-top:20px; width:100%; max-width:500px; }
 #checkout-form { display:flex; flex-direction:column; gap:10px; }
 #checkout-form input[type=text], #checkout-form input[type=email], #checkout-form input[type=tel] {
   padding:10px; border-radius:8px; border:1px solid #999; font-size:1rem;
 }
 #checkout-form button {
-  background:#111; color:#fff; padding:12px; border:none; border-radius:8px; cursor:pointer; font-size:1.2rem; margin-top:10px;
-  box-shadow:0 0 10px #f00 inset; transition: all 0.3s ease;
+  background:#111; color:#fff; padding:12px; border:none; border-radius:8px; cursor:pointer; font-size:1.2rem; margin-top:10px; box-shadow:0 0 10px #f00 inset; transition:all 0.3s ease;
 }
 #checkout-form button:hover { background:#f00; box-shadow:0 0 20px #f00 inset; }
 
-/* Size Meter Neon */
-.size-meter {
-  display:flex; justify-content:center; align-items:center; gap:20px; margin-top:30px;
+/* Size meter section in categories */
+#size-section {
+  display:flex; justify-content:center; align-items:center; gap:20px; margin:20px 0;
 }
 .size-option {
-  padding:15px 30px; border-radius:15px; border:2px solid #f00; font-size:1.4rem; cursor:pointer;
-  color:#fff; background:linear-gradient(45deg,#111,#222); box-shadow:0 0 10px #f00 inset;
-  transition: all 0.3s ease;
+  padding:15px 30px; border-radius:15px; border:2px solid #f00; font-size:1.4rem; cursor:pointer; color:#fff; background:linear-gradient(45deg,#111,#222); box-shadow:0 0 10px #f00 inset; transition:all 0.3s ease;
 }
-.size-option:hover, .size-selected { background: #f00; box-shadow:0 0 20px #f00 inset; font-weight:bold; }
+.size-option:hover, .size-selected { background:#f00; box-shadow:0 0 20px #f00 inset; font-weight:bold; }
 .size-selected { border-color:#fff; }
 
 </style>
@@ -137,7 +114,7 @@ button.category-btn:hover { background:#f00; box-shadow:0 0 20px #f00 inset; }
 <header>
   <div class="header-left">
     <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" class="logo" alt="Soccer Logo"/>
-    <div class="store-title">Taha Pekka</div>
+    <div class="store-title">Taha's Football 101</div>
   </div>
   <nav>
     <ul>
@@ -149,7 +126,7 @@ button.category-btn:hover { background:#f00; box-shadow:0 0 20px #f00 inset; }
   </nav>
 </header>
 
-<!-- Pages container -->
+<!-- Pages -->
 <div id="page-container">
 
 <!-- Home -->
@@ -172,13 +149,9 @@ button.category-btn:hover { background:#f00; box-shadow:0 0 20px #f00 inset; }
   <button class="category-btn" onclick="loadProducts('shirts')">Jerseys</button>
   <button class="category-btn" onclick="loadProducts('balls')">Balls</button>
 </div>
-<!-- Size Meter -->
-<div class="size-meter" id="size-meter">
-  <div class="size-option" onclick="selectSize('S')">S</div>
-  <div class="size-option" onclick="selectSize('M')">M</div>
-  <div class="size-option" onclick="selectSize('L')">L</div>
-</div>
-<!-- Product Grid -->
+<!-- Size options for each category -->
+<div id="size-section" style="display:flex; flex-wrap:wrap; justify-content:center;"></div>
+<!-- Product grid -->
 <div id="product-grid"></div>
 </section>
 
@@ -215,6 +188,7 @@ button.category-btn:hover { background:#f00; box-shadow:0 0 20px #f00 inset; }
 </footer>
 
 <script>
+// Data for products
 const productsData = {
   boots: [
     { name:'Nike GX Elite', price:250, link:'https://www.rebelsport.com.au/p/nike-phantom-gx-2-elite-football-boots-M69207101.html', img:'https://images.unsplash.com/photo-1625593960090-0b7b4fbcab68?ixlib=rb-4.0.4&auto=format&fit=crop&w=600&q=80' },
@@ -239,7 +213,7 @@ const productsData = {
   ]
 };
 
-let cart=[];
+let cart=[]; 
 let currentPage='home';
 
 function showPage(page) {
@@ -248,10 +222,19 @@ function showPage(page) {
   if(page==='shop'){ loadProducts('boots'); }
   if(page==='cart'){ displayCart(); }
 }
-
 function loadProducts(category) {
   const grid=document.getElementById('product-grid');
   grid.innerHTML='';
+  // Load size options for each category
+  const sizeSection=document.getElementById('size-section');
+  sizeSection.innerHTML='';
+  ['S','M','L'].forEach(s => {
+    const btn=document.createElement('div');
+    btn.className='size-option';
+    btn.innerText=s;
+    btn.onclick=()=>selectSize(s);
+    sizeSection.appendChild(btn);
+  });
   productsData[category].forEach(p => {
     const card=document.createElement('div');
     card.className='product-card';
@@ -264,15 +247,12 @@ function loadProducts(category) {
     grid.appendChild(card);
   });
 }
-
 function addToCart(name,price){
-  const existing=cart.find(c=>c.name===name);
-  if(existing){ existing.quantity++; }
-  else{ cart.push({name,price,quantity:1}); }
+  const size=document.querySelector('.size-selected')?document.querySelector('.size-selected').innerText:'M';
+  cart.push({name,price,size,sizeOption: selectedSize, quantity:1});
   document.getElementById('cart-count').innerText=cart.reduce((a,c)=>a+c.quantity,0);
   if(currentPage==='cart'){ displayCart(); }
 }
-
 function displayCart() {
   const container=document.getElementById('cart-items');
   container.innerHTML='';
@@ -281,24 +261,20 @@ function displayCart() {
     const div=document.createElement('div');
     div.className='cart-item';
     div.innerHTML=`
-      <span>${item.name} x${item.quantity} - $${item.price*item.quantity}</span>
+      <span>${item.name} (${item.size}) x${item.quantity} - $${item.price*item.quantity}</span>
       <button class="btn-remove" onclick="removeItem(${i})">Remove</button>
     `;
     container.appendChild(div);
   });
 }
-
 function removeItem(i){ cart.splice(i,1); updateCart(); }
-
 function updateCart(){ 
   document.getElementById('cart-count').innerText=cart.reduce((a,c)=>a+c.quantity,0);
   if(currentPage==='cart'){ displayCart(); }
 }
-
 function showCheckout() {
   document.getElementById('checkout').style.display='block';
 }
-
 document.getElementById('checkout-form').addEventListener('submit',function(e){
   e.preventDefault();
   alert('Thank you for your purchase!');
@@ -306,14 +282,12 @@ document.getElementById('checkout-form').addEventListener('submit',function(e){
   updateCart();
   document.getElementById('checkout').style.display='none';
 });
-
 let selectedSize='M';
 function selectSize(size){
   document.querySelectorAll('.size-option').forEach(s=>s.classList.remove('size-selected'));
-  document.querySelectorAll('.size-option').forEach(s=>{ if(s.textContent===size) s.classList.add('size-selected') });
+  document.querySelectorAll('.size-option').forEach(s=>{ if(s.innerText===size) s.classList.add('size-selected') });
   selectedSize=size;
 }
-
 // Auto start
 setTimeout(()=>{ document.getElementById('intro').style.display='none'; },4000);
 </script>
