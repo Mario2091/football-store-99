@@ -374,6 +374,60 @@
     font-style: italic;
   }
 
+  /* REVIEW FORM */
+  #review-form {
+    background: #220000;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #ff003c;
+    margin-bottom: 2rem;
+  }
+  #review-form label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 700;
+    color: #ff4d4d;
+  }
+  #review-form input[type="text"],
+  #review-form textarea {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    background: #330000;
+    color: white;
+    box-shadow: 0 0 8px #ff003c inset;
+  }
+  #review-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  #review-form input[type="text"]:focus,
+  #review-form textarea:focus {
+    outline: 2px solid #ff003c;
+  }
+  .star-rating {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 1rem;
+  }
+  .star-rating button {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .star-rating button.selected,
+  .star-rating button:hover,
+  .star-rating button:hover ~ button {
+    color: #ff003c;
+  }
+
   /* RESPONSIVE */
   @media (max-width: 600px) {
     nav ul {
@@ -450,347 +504,296 @@
   <!-- REVIEWS -->
   <section id="reviews" aria-label="Customer Reviews">
     <h2>Customer Reviews</h2>
-    <div id="reviews-list"></div>
+
+    <form id="review-form" aria-label="Submit a review">
+      <label for="reviewer-name">Name:</label>
+      <input type="text" id="reviewer-name" name="reviewer-name" required placeholder="Your name" />
+
+      <label for="star-rating">Rating:</label>
+      <div class="star-rating" role="radiogroup" aria-label="Star rating">
+        <button type="button" data-star="1" aria-label="1 star">&#9733;</button>
+        <button type="button" data-star="2" aria-label="2 stars">&#9733;</button>
+        <button type="button" data-star="3" aria-label="3 stars">&#9733;</button>
+        <button type="button" data-star="4" aria-label="4 stars">&#9733;</button>
+        <button type="button" data-star="5" aria-label="5 stars">&#9733;</button>
+      </div>
+
+      <label for="review-text">Review:</label>
+      <textarea id="review-text" name="review-text" required placeholder="Write your review here..."></textarea>
+
+      <button type="submit">Submit Review</button>
+    </form>
+
+    <div id="reviews-list" aria-live="polite" aria-relevant="additions"></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" aria-label="Contact Information">
+    <h2>Contact</h2>
+    <div class="contact-info">
+      Email: contact@football101.com.au<br />
+      Phone: +61 412 345 678<br />
+      Address: 123 Soccer St, Sydney, Australia<br />
+    </div>
   </section>
 
   <!-- CART -->
   <section id="cart" aria-label="Shopping Cart">
     <h2>Your Cart</h2>
     <div id="cart-items"></div>
-    <h3>Total: $<span id="cart-total">0</span></h3>
-    <form id="checkout-form" autocomplete="off">
-      <input type="text" id="customer-name" placeholder="Full Name" required />
-      <input type="email" id="customer-email" placeholder="Email" required />
-      <input type="tel" id="customer-phone" placeholder="Phone" required />
-      <input type="text" id="customer-address" placeholder="Address" required />
+    <div id="cart-total">Total: $0.00</div>
+    <form id="checkout-form" aria-label="Checkout form">
+      <input type="text" id="fullname" name="fullname" placeholder="Full Name" required />
+      <input type="email" id="email" name="email" placeholder="Email Address" required />
       <button type="submit">Checkout</button>
     </form>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" aria-label="Contact Information">
-    <h2>Contact Us</h2>
-    <div class="contact-info">
-      <p>Email: <a href="mailto:83137hsh2gmail.com">83137hsh2gmail.com</a></p>
-      <p>Phone: +73 372 434 483</p>
-      <p>Operating Days: Monday to Saturday</p>
-    </div>
   </section>
 </main>
 
 <script>
-  // ============ PRODUCT DATA ============
-  const products = {
-    boots: [
-      {name: "Nike phantom GX 2 Elite", price: 199.99, img: "https://www.rebelsport.com.au/dw/image/v2/BBRV_PRD/on/demandware.static/-/Sites-srg-internal-master-catalog/default/dw83db72ad/images/69207101/Rebel_69207101_bluewhite_hi-res.jpg?sw=1000&sh=1000&sm=fit&q=80", link:"https://www.rebelsport.com.au/p/nike-phantom-gx-2-elite-football-boots-M69207101.html"},
-      {name: "Nike Phantom GX Club", price: 150, img: "https://www.rebelsport.com.au/dw/image/v2/BBRV_PRD/on/demandware.static/-/Sites-srg-internal-master-catalog/default/dwab9a1c08/images/66426901/Rebel_66426901-00_blacksilver_hi-res.jpg?sw=1000&sh=1000&sm=fit&q=80", link:"https://www.rebelsport.com.au/p/nike-phantom-gx-club-football-boots-M66426901.html"},
-      {name: "Puma Ultra Match", price: 175, img: "https://www.rebelsport.com.au/dw/image/v2/BBRV_PRD/on/demandware.static/-/Sites-srg-internal-master-catalog/default/dw4a12ce62/images/65558801/Rebel_65558801-00_blackwhite_hi-res.jpg?sw=1000&sh=1000&sm=fit&q=80", link:"https://www.rebelsport.com.au/p/puma-ultra-match-football-boots-M65558801.html"},
-      {name: "Adidas F50 Elite", price: 200, img: "https://www.rebelsport.com.au/dw/image/v2/BBRV_PRD/on/demandware.static/-/Sites-srg-internal-master-catalog/default/dwf055347e/images/70476801/Rebel_70476801_whitesilver_hi-res.jpg?sw=1000&sh=1000&sm=fit&q=80", link:"https://www.rebelsport.com.au/p/adidas-f50-elite-football-boots-M70476801.html"},
-      {name: "Puma King Pro Brilliance", price: 230, img: "https://www.rebelsport.com.au/dw/image/v2/BBRV_PRD/on/demandware.static/-/Sites-srg-internal-master-catalog/default/dw74f35e12/images/69187801/Rebel_69187801-00_whiteblack_hi-res.jpg?sw=1000&sh=1000&sm=fit&q=80", link:"https://www.rebelsport.com.au/p/puma-king-pro-brilliance-womens-football-boots-M69187801.html"},
-      {name: "Adidas Predator Club Kids", price: 75, img: "https://www.rebelsport.com.au/dw/image/v2/BBRV_PRD/on/demandware.static/-/Sites-srg-internal-master-catalog/default/dw8f9f357c/images/68054401/Rebel_68054401-00_black_hi-res.jpg?sw=1000&sh=1000&sm=fit&q=80", link:"https://www.rebelsport.com.au/p/adidas-predator-club-kids-football-boots-M68054401.html"}
-    ],
-    jerseys: [
-      {name: "Liverpool 25/26 Home", price: 120, img: "https://cdn.shopify.com/s/files/1/0252/7661/7009/products/liverpool-home-2025-2026-football-shirt-108_800x.jpg", link:"https://www.joyfball.cc/products/2025-2026-player-version-liverpool-home-football-shirt-1-1-thai-quality-o060"},
-      {name: "Man Utd 25/26 Away", price: 110, img: "https://cdn.shopify.com/s/files/1/0252/7661/7009/products/manchester-united-away-2025-2026-football-shirt-108_800x.jpg", link:"https://www.joyfball.cc/products/2025-2026-manchester-united-away-football-shirt-1-1-thai-quality"},
-      {name: "AC Milan 25/26 Home", price: 100, img: "https://cdn.shopify.com/s/files/1/0252/7661/7009/products/ac-milan-home-2025-2026-football-shirt-108_800x.jpg", link:"https://www.joyfball.cc/products/2025-2026-player-version-ac-milan-home-soccer-jersey-1-1-thai-quality"},
-      {name: "Barcelona 24/25 Special", price: 90, img: "https://cdn.shopify.com/s/files/1/0252/7661/7009/products/barcelona-special-edition-football-shirt-108_800x.jpg", link:"https://www.joyfball.cc/products/2024-2025-barcelona-home-special-edition-football-shirt-1-1-thai-quality-4axi-rvpx"},
-      {name: "PSG 24/25 Special", price: 85, img: "https://cdn.shopify.com/s/files/1/0252/7661/7009/products/psg-special-edition-football-shirt-108_800x.jpg", link:"https://www.joyfball.cc/products/2024-2025-psg-paris-saint-germain-special-edition-football-shirt-1-1-thai-quality"},
-      {name: "Real Madrid 25/26 Third", price: 95, img: "https://cdn.shopify.com/s/files/1/0252/7661/7009/products/real-madrid-third-2025-2026-football-shirt-108_800x.jpg", link:"https://www.joyfball.cc/products/2025-2026-real-madrid-third-away-football-shirt-1-1-thai-quality"}
-    ],
-    balls: [
-      {name: "Academy Team Ball", price: 20, img: "https://cdn.shopify.com/s/files/1/0223/7550/6296/products/fz2966-105_academy-team-ball_ultrafootball_800x.jpg", link:"https://www.ultrafootball.com/products/academy-team-ball-fz2966-105"},
-      {name: "UWCL Pro 24/25", price: 50, img: "https://cdn.shopify.com/s/files/1/0223/7550/6296/products/is7437_uwcl-pro-24-25-ultrafootball_800x.jpg", link:"https://www.ultrafootball.com/products/uwcl-pro-24-25-group-stage-ball-is7437"},
-      {name: "UCL Club 25/26", price: 80, img: "https://cdn.shopify.com/s/files/1/0223/7550/6296/products/jp1535_ucl-club-25-26-ultrafootball_800x.jpg", link:"https://www.ultrafootball.com/products/ucl-club-25-26-league-stage-ball-jp1535"},
-      {name: "UCL Mini 25/26", price: 25, img: "https://cdn.shopify.com/s/files/1/0223/7550/6296/products/jp1544_ucl-mini-25-26-ultrafootball_800x.jpg", link:"https://www.ultrafootball.com/products/ucl-25-26-league-stage-mini-ball-jp1544"},
-      {name: "Adidas Tiro Club", price: 30, img: "https://cdn.shopify.com/s/files/1/0223/7550/6296/products/ht2430_adidas-tiro-club-ultrafootball_800x.jpg", link:"https://www.ultrafootball.com/products/adidas-tiro-club-football-ball-ht2430"}
-    ]
+  // INTRO SCREEN FADE OUT
+  window.onload = () => {
+    setTimeout(() => {
+      document.getElementById('intro').style.opacity = '0';
+      setTimeout(() => {
+        document.getElementById('intro').style.display = 'none';
+      }, 1000);
+    }, 2500);
   };
 
-<!-- Leave a Review Form -->
-<div class="leave-review">
-    <h3>Leave Your Review</h3>
-    <form id="reviewForm">
-        <label for="reviewName">Your Name:</label>
-        <input type="text" id="reviewName" required placeholder="Enter your name">
-
-        <label for="reviewStars">Rating:</label>
-        <select id="reviewStars" required>
-            <option value="">Select stars</option>
-            <option value="5">⭐⭐⭐⭐⭐</option>
-            <option value="4">⭐⭐⭐⭐</option>
-            <option value="3">⭐⭐⭐</option>
-            <option value="2">⭐⭐</option>
-            <option value="1">⭐</option>
-        </select>
-
-        <label for="reviewText">Your Review:</label>
-        <textarea id="reviewText" rows="3" required placeholder="Write your review here"></textarea>
-
-        <button type="submit">Submit Review</button>
-    </form>
-</div>
-
- // ============ REVIEWS DATA ============
-  const reviews = [
-    {name:"Judith Harris", text:"Amazing selection and top quality! Absolutely love the boots I bought."},
-    {name:"Samuel Chan", text:"Fast shipping and great customer service. Highly recommend!"},
-    {name:"Hattie Aguilar", text:"The jerseys are fantastic and fit perfectly."},
-    {name:"Milo Wright", text:"Best football store in Australia, hands down."},
-    {name:"Lily Giles", text:"Five stars for quality and price. Will buy again!"},
-    {name:"Kole Payne", text:"Love the variety of sizes and styles."},
-    {name:"London Donovan", text:"The balls feel great and look awesome."},
-    {name:"Brayan Adkins", text:"Excellent website design and easy checkout."},
-    {name:"Emelia Mejia", text:"Customer support was very helpful and friendly."},
-    {name:"Atticus Harding", text:"My go-to for football gear now."},
-    {name:"Aniya Salazar", text:"Perfect fit and fast delivery."},
-    {name:"Brody Sosa", text:"Fantastic quality on all products."},
-    {name:"Cassandra Love", text:"Best prices for boots and jerseys."},
-    {name:"Jeffrey Bass", text:"Smooth checkout process and great products."},
-    {name:"Zahra Benton", text:"I keep coming back for more, highly recommend."},
-    {name:"Jamal Gill", text:"The size meter helped me pick the perfect size."},
-    {name:"Jordan Patrick", text:"Quality items and reliable delivery times."},
-    {name:"Derrick Huff", text:"Great range and excellent prices."},
-    {name:"Karsyn Meadows", text:"The neon design on the site is really cool."},
-    {name:"Wayne Conley", text:"My team loves these kits!"}, 
-    {name:"Salem Wilcox", text:"The cart system is easy to use and smooth."},
-    {name:"Jerry Allen", text:"Highly satisfied with my purchase."},
-    {name:"Riley Burnett", text:"Superb selection of football gear."},
-    {name:"Davis Davis", text:"Perfect experience from start to finish."},
-    {name:"Mia Bruce", text:"Will recommend to all my friends."}
-  ];
-
-  // ============ RENDERING PRODUCTS ============
-  function createProductCard(product, category, index) {
-    const card = document.createElement('div');
-    card.classList.add('product-card');
-    card.innerHTML = `
-      <a href="${product.link}" target="_blank" rel="noopener noreferrer" aria-label="View ${product.name} details">
-        <img src="${product.img}" alt="${product.name}" loading="lazy" />
-      </a>
-      <h3>${product.name}</h3>
-      <p>$${product.price}</p>
-      ${category !== 'balls' ? `
-      <label for="size-${category}-${index}" class="visually-hidden">Select size for ${product.name}</label>
-      <select id="size-${category}-${index}" aria-label="Select size for ${product.name}" data-cat="${category}" data-index="${index}">
-        <option value="">Select Size</option>
-        <option value="S">Small</option>
-        <option value="M">Medium</option>
-        <option value="L">Large</option>
-      </select>` : ''}
-      <button data-cat="${category}" data-index="${index}" aria-label="Add ${product.name} to cart">Add to Cart</button>
-    `;
-    return card;
-  }
-
-  function renderProducts() {
-    const bootsList = document.getElementById('boots-list');
-    const jerseysList = document.getElementById('jerseys-list');
-    const ballsList = document.getElementById('balls-list');
-
-    bootsList.innerHTML = '';
-    jerseysList.innerHTML = '';
-    ballsList.innerHTML = '';
-
-    products.boots.forEach((prod, i) => {
-      bootsList.appendChild(createProductCard(prod, 'boots', i));
-    });
-    products.jerseys.forEach((prod, i) => {
-      jerseysList.appendChild(createProductCard(prod, 'jerseys', i));
-    });
-    products.balls.forEach((prod, i) => {
-      ballsList.appendChild(createProductCard(prod, 'balls', i));
-    });
-  }
-
-  // ============ RENDER REVIEWS ============
-  function renderReviews() {
-    const reviewsList = document.getElementById('reviews-list');
-    reviewsList.innerHTML = '';
-    reviews.forEach(r => {
-      const div = document.createElement('div');
-      div.classList.add('review-card');
-      div.innerHTML = `
-        <div class="reviewer-name">${r.name}</div>
-        <div class="review-stars" aria-label="5 star rating">★★★★★</div>
-        <div class="review-text">"${r.text}"</div>
-      `;
-      reviewsList.appendChild(div);
-    });
-  }
-
-  // ============ CART LOGIC ============
-  let cart = JSON.parse(localStorage.getItem('footballCart')) || [];
-
-  const cartCount = document.getElementById('cart-count');
-  const cartItems = document.getElementById('cart-items');
-  const cartTotal = document.getElementById('cart-total');
-
-  function saveCart() {
-    localStorage.setItem('footballCart', JSON.stringify(cart));
-  }
-
-  function updateCartCount() {
-    const totalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-    cartCount.textContent = totalCount;
-  }
-
-  function calculateTotal() {
-    return cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
-  }
-
-  function renderCart() {
-    cartItems.innerHTML = '';
-    if (cart.length === 0) {
-      cartItems.innerHTML = '<p>Your cart is empty.</p>';
-      cartTotal.textContent = '0';
-      return;
-    }
-    cart.forEach((item, i) => {
-      const div = document.createElement('div');
-      div.className = 'cart-item';
-      div.innerHTML = `
-        <div class="cart-item-info">
-          <strong>${item.name}</strong> ${item.size ? `(Size: ${item.size})` : ''} - $${item.price.toFixed(2)}
-        </div>
-        <div class="cart-item-qty">
-          <button class="qty-dec" data-index="${i}" aria-label="Decrease quantity">−</button>
-          <span>${item.quantity}</span>
-          <button class="qty-inc" data-index="${i}" aria-label="Increase quantity">+</button>
-          <button class="remove-item" data-index="${i}" aria-label="Remove item" style="background:#550000; margin-left:8px;">x</button>
-        </div>
-      `;
-      cartItems.appendChild(div);
-    });
-    cartTotal.textContent = calculateTotal();
-  }
-
-  function addToCart(category, index) {
-    const product = products[category][index];
-    let size = '';
-    if(category !== 'balls') {
-      const selects = document.querySelectorAll(`select[data-cat="${category}"][data-index="${index}"]`);
-      if(selects.length === 0) {
-        alert('Size selector missing.');
-        return;
-      }
-      size = selects[0].value;
-      if(!size) {
-        alert('Please select a size.');
-        return;
-      }
-    }
-    const existingIndex = cart.findIndex(item => item.name === product.name && item.size === size);
-    if(existingIndex > -1) {
-      cart[existingIndex].quantity += 1;
-    } else {
-      cart.push({name: product.name, price: product.price, size: size, quantity: 1});
-    }
-    saveCart();
-    updateCartCount();
-    renderCart();
-    alert(`${product.name} added to cart.`);
-  }
-
-  // ============ NAVIGATION LOGIC ============
+  // NAVIGATION SWITCHER
   const navLinks = document.querySelectorAll('#nav-links a');
   const sections = document.querySelectorAll('main section');
 
   navLinks.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
-      const target = link.dataset.target;
+      const target = link.getAttribute('data-target');
 
-      // Update active nav
-      navLinks.forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
-
-      // Show correct section
       sections.forEach(sec => {
-        if(sec.id === target) {
-          sec.classList.add('active');
-          sec.setAttribute('aria-hidden', 'false');
-        } else {
-          sec.classList.remove('active');
-          sec.setAttribute('aria-hidden', 'true');
-        }
+        sec.classList.remove('active');
+        if (sec.id === target) sec.classList.add('active');
       });
 
-      // Scroll to top on page switch
-      window.scrollTo({top:0, behavior:'smooth'});
+      navLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
     });
   });
 
-  // ============ CART BUTTON LISTENER ============
-  document.addEventListener('click', e => {
-    if(e.target.tagName === 'BUTTON' && e.target.dataset.cat !== undefined) {
-      addToCart(e.target.dataset.cat, e.target.dataset.index);
-    } else if(e.target.classList.contains('qty-inc')) {
-      const i = e.target.dataset.index;
-      cart[i].quantity++;
-      saveCart();
-      updateCartCount();
-      renderCart();
-    } else if(e.target.classList.contains('qty-dec')) {
-      const i = e.target.dataset.index;
-      if(cart[i].quantity > 1) {
-        cart[i].quantity--;
-        saveCart();
-        updateCartCount();
-        renderCart();
-      }
-    } else if(e.target.classList.contains('remove-item')) {
-      const i = e.target.dataset.index;
-      cart.splice(i, 1);
-      saveCart();
-      updateCartCount();
-      renderCart();
+  // PRODUCTS DATA
+  const boots = [
+    { id: 'boot1', name: 'Nike Phantom GX 2 Club', price: 79.99, img: 'https://www.rebelsport.com.au/on/demandware.static/-/Sites-master-catalog/default/dwc665d58e/images/hi-res/M69570901.jpg' },
+    { id: 'boot2', name: 'Nike Phantom 6 Low Elite LV8 FG', price: 249.99, img: 'https://www.rebelsport.com.au/on/demandware.static/-/Sites-master-catalog/default/dw0661a730/images/hi-res/M71357201.jpg' },
+    { id: 'boot3', name: 'Adidas Predator Edge FG', price: 219.95, img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/0f50783d8045443b9173adad010c2f88_9366/Predator_Edge_FG_Shoes_White_GZ0424_01_standard.jpg' }
+  ];
+  const jerseys = [
+    { id: 'jersey1', name: 'Manchester United Home Jersey', price: 120.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://assets.manutd.com/AssetPicker/images/0/0/14/108322014/108322014_w1200h1200.jpg' },
+    { id: 'jersey2', name: 'Arsenal Away Jersey', price: 110.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://cdn.shopify.com/s/files/1/0285/9512/0009/products/arsenal-kit-22-23-16_f496a5b2-6bdf-46a6-9afc-04ec8f6eb31b_1000x.jpg' },
+    { id: 'jersey3', name: 'Chelsea Third Jersey', price: 115.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://cdn.shopify.com/s/files/1/0275/9491/7562/products/Chelsea-Third-Kit_1200x.jpg' }
+  ];
+  const balls = [
+    { id: 'ball1', name: 'Nike Flight Soccer Ball', price: 49.99, img: 'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/7b96b2f8-41f7-4176-8a66-f3c7a476d2c3/nike-flight-soccer-ball-HzPQXF.jpg' },
+    { id: 'ball2', name: 'Adidas Uniforia League', price: 59.99, img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/3b667b7799c0485f839aad3900a54c18_9366/Uniforia_League_Ball_Black_FY2190_01_standard.jpg' },
+    { id: 'ball3', name: 'Puma Team Final 21.5', price: 44.99, img: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa/global/083775/03/sv01/fnd/EEA/fmt/png' }
+  ];
+
+  // RENDER PRODUCTS FUNCTION
+  function renderProducts(containerId, products, withSize = false) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    products.forEach(product => {
+      const card = document.createElement('div');
+      card.classList.add('product-card');
+      card.innerHTML = `
+        <img src="${product.img}" alt="${product.name}" />
+        <h3>${product.name}</h3>
+        <p>$${product.price.toFixed(2)}</p>
+        ${withSize ? `<select aria-label="Select size for ${product.name}" data-product-id="${product.id}">
+          ${product.sizes.map(s => `<option value="${s}">${s}</option>`).join('')}
+        </select>` : ''}
+        <button data-product-id="${product.id}">Add to Cart</button>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  renderProducts('boots-list', boots);
+  renderProducts('jerseys-list', jerseys, true);
+  renderProducts('balls-list', balls);
+
+  // CART LOGIC
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    renderCartItems();
+  }
+  function updateCartCount() {
+    document.getElementById('cart-count').textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
+  }
+  function renderCartItems() {
+    const container = document.getElementById('cart-items');
+    container.innerHTML = '';
+    if (cart.length === 0) {
+      container.textContent = 'Your cart is empty.';
+      document.getElementById('cart-total').textContent = 'Total: $0.00';
+      return;
     }
+    let total = 0;
+    cart.forEach(item => {
+      const product = [...boots, ...jerseys, ...balls].find(p => p.id === item.id);
+      if (!product) return;
+      total += product.price * item.quantity;
+      const div = document.createElement('div');
+      div.classList.add('cart-item');
+      div.innerHTML = `
+        <div class="cart-item-info">
+          <strong>${product.name}</strong> ${item.size ? '(' + item.size + ')' : ''}
+          <br />$${product.price.toFixed(2)} x ${item.quantity}
+        </div>
+        <div class="cart-item-qty">
+          <button aria-label="Decrease quantity for ${product.name}" data-id="${item.id}" data-action="decrease">-</button>
+          <button aria-label="Increase quantity for ${product.name}" data-id="${item.id}" data-action="increase">+</button>
+          <button aria-label="Remove ${product.name} from cart" data-id="${item.id}" data-action="remove" style="color:#ff003c; font-weight:900;">x</button>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+    document.getElementById('cart-total').textContent = `Total: $${total.toFixed(2)}`;
+  }
+
+  // ADD TO CART BUTTONS
+  document.querySelectorAll('.product-card button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-product-id');
+      let size = null;
+      if (btn.previousElementSibling && btn.previousElementSibling.tagName === 'SELECT') {
+        size = btn.previousElementSibling.value;
+      }
+      const existingIndex = cart.findIndex(i => i.id === id && i.size === size);
+      if (existingIndex !== -1) {
+        cart[existingIndex].quantity++;
+      } else {
+        cart.push({ id, quantity: 1, size });
+      }
+      saveCart();
+      alert('Added to cart!');
+    });
   });
 
-  // ============ CHECKOUT FORM ============
+  // CART ITEM BUTTONS (INCREASE, DECREASE, REMOVE)
+  document.getElementById('cart-items').addEventListener('click', e => {
+    if (!e.target.matches('button')) return;
+    const id = e.target.getAttribute('data-id');
+    const action = e.target.getAttribute('data-action');
+    if (!id || !action) return;
+
+    const idx = cart.findIndex(i => i.id === id);
+    if (idx === -1) return;
+
+    if (action === 'increase') {
+      cart[idx].quantity++;
+    } else if (action === 'decrease') {
+      cart[idx].quantity--;
+      if (cart[idx].quantity <= 0) cart.splice(idx, 1);
+    } else if (action === 'remove') {
+      cart.splice(idx, 1);
+    }
+    saveCart();
+  });
+
+  // CHECKOUT FORM SUBMISSION
   document.getElementById('checkout-form').addEventListener('submit', e => {
     e.preventDefault();
-    if(cart.length === 0) {
-      alert("Your cart is empty.");
+    if (cart.length === 0) {
+      alert('Your cart is empty.');
       return;
     }
-    const name = e.target['customer-name'].value.trim();
-    const email = e.target['customer-email'].value.trim();
-    const phone = e.target['customer-phone'].value.trim();
-    const address = e.target['customer-address'].value.trim();
-
-    if(!name || !email || !phone || !address) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
-    alert(`Thank you for your purchase, ${name}! Your total is $${calculateTotal()}. We will contact you shortly.`);
+    alert(`Thank you for your purchase, ${e.target.fullname.value}!`);
     cart = [];
     saveCart();
-    updateCartCount();
-    renderCart();
     e.target.reset();
-
-    // After checkout, go back to home
-    document.querySelector('#nav-links a[data-target="home"]').click();
+    // Go back to home after purchase
+    document.querySelector('nav ul li a[data-target="home"]').click();
   });
 
-  // ============ INITIALIZE ============
-  renderProducts();
-  renderReviews();
-  updateCartCount();
-  renderCart();
+  // REVIEWS FUNCTIONALITY
+  const reviewForm = document.getElementById('review-form');
+  const reviewsList = document.getElementById('reviews-list');
+  const starButtons = reviewForm.querySelectorAll('.star-rating button');
+  let currentStarRating = 0;
 
-  // ============ INTRO REMOVAL ============
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const intro = document.getElementById('intro');
-      intro.style.transition = 'opacity 1s ease';
-      intro.style.opacity = '0';
-      setTimeout(() => intro.style.display = 'none', 1000);
-    }, 3500);
+  function renderStars(rating) {
+    let stars = '';
+    for(let i=1; i<=5; i++) {
+      stars += i <= rating ? '&#9733;' : '&#9734;';
+    }
+    return stars;
+  }
+
+  function displayReviews() {
+    const reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+    if(reviews.length === 0) {
+      reviewsList.innerHTML = '<p>No reviews yet. Be the first to review!</p>';
+      return;
+    }
+    reviewsList.innerHTML = '';
+    reviews.forEach(r => {
+      const div = document.createElement('div');
+      div.classList.add('review-card');
+      div.innerHTML = `
+        <div class="reviewer-name">${escapeHTML(r.name)}</div>
+        <div class="review-stars">${renderStars(r.rating)}</div>
+        <div class="review-text">${escapeHTML(r.text)}</div>
+      `;
+      reviewsList.appendChild(div);
+    });
+  }
+  function escapeHTML(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // Star rating buttons logic
+  starButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentStarRating = parseInt(btn.getAttribute('data-star'));
+      starButtons.forEach(b => {
+        b.classList.toggle('selected', parseInt(b.getAttribute('data-star')) <= currentStarRating);
+      });
+    });
   });
+
+  // Submit review form
+  reviewForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = e.target['reviewer-name'].value.trim();
+    const text = e.target['review-text'].value.trim();
+    if (currentStarRating === 0) {
+      alert('Please select a star rating.');
+      return;
+    }
+    if (!name || !text) {
+      alert('Please fill out all fields.');
+      return;
+    }
+
+    const reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+    reviews.push({ name, rating: currentStarRating, text });
+    localStorage.setItem('reviews', JSON.stringify(reviews));
+
+    e.target.reset();
+    currentStarRating = 0;
+    starButtons.forEach(b => b.classList.remove('selected'));
+    displayReviews();
+    alert('Thank you for your review!');
+  });
+
+  // Initial render
+  displayReviews();
+  saveCart();
 </script>
 
-</body>
-</html>
+</body></html>
