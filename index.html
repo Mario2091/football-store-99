@@ -506,7 +506,31 @@
     ]
   };
 
-  // ============ REVIEWS DATA ============
+<!-- Leave a Review Form -->
+<div class="leave-review">
+    <h3>Leave Your Review</h3>
+    <form id="reviewForm">
+        <label for="reviewName">Your Name:</label>
+        <input type="text" id="reviewName" required placeholder="Enter your name">
+
+        <label for="reviewStars">Rating:</label>
+        <select id="reviewStars" required>
+            <option value="">Select stars</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="1">⭐</option>
+        </select>
+
+        <label for="reviewText">Your Review:</label>
+        <textarea id="reviewText" rows="3" required placeholder="Write your review here"></textarea>
+
+        <button type="submit">Submit Review</button>
+    </form>
+</div>
+
+ // ============ REVIEWS DATA ============
   const reviews = [
     {name:"Judith Harris", text:"Amazing selection and top quality! Absolutely love the boots I bought."},
     {name:"Samuel Chan", text:"Fast shipping and great customer service. Highly recommend!"},
