@@ -357,6 +357,7 @@
     margin-bottom: 1rem;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(255, 0, 60, 0.5);
+    position: relative;
   }
   .reviewer-name {
     font-weight: 900;
@@ -373,59 +374,43 @@
     font-size: 1rem;
     font-style: italic;
   }
-
-  /* REVIEW FORM */
-  #review-form {
-    background: #220000;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 0 20px #ff003c;
-    margin-bottom: 2rem;
-  }
-  #review-form label {
-    display: block;
-    margin-bottom: 0.3rem;
-    font-weight: 700;
-    color: #ff4d4d;
-  }
-  #review-form input[type="text"],
-  #review-form textarea {
-    width: 100%;
-    padding: 0.6rem;
-    margin-bottom: 1rem;
-    border-radius: 6px;
+  .remove-review-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: #550000;
     border: none;
-    font-weight: 700;
-    font-size: 1rem;
-    background: #330000;
     color: white;
-    box-shadow: 0 0 8px #ff003c inset;
-  }
-  #review-form textarea {
-    resize: vertical;
-    min-height: 80px;
-  }
-  #review-form input[type="text"]:focus,
-  #review-form textarea:focus {
-    outline: 2px solid #ff003c;
-  }
-  .star-rating {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 1rem;
-  }
-  .star-rating button {
-    font-size: 2rem;
-    background: none;
-    border: none;
-    color: #555;
+    font-weight: 900;
+    border-radius: 6px;
     cursor: pointer;
-    transition: color 0.3s;
+    padding: 0 8px;
   }
-  .star-rating button.selected,
-  .star-rating button:hover,
-  .star-rating button:hover ~ button {
-    color: #ff003c;
+
+  /* MUSIC PLAYER BUTTON */
+  #music-control {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    background: var(--neon-red);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 0 15px var(--neon-red);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10000;
+    transition: background 0.3s ease;
+  }
+  #music-control:hover {
+    background: #ff1a4d;
+  }
+  #music-control svg {
+    fill: white;
+    width: 24px;
+    height: 24px;
   }
 
   /* RESPONSIVE */
@@ -444,7 +429,8 @@
     }
   }
 </style>
-</head><body>
+</head>
+<body>
 
 <!-- INTRO SCREEN -->
 <div id="intro">
@@ -504,36 +490,31 @@
   <!-- REVIEWS -->
   <section id="reviews" aria-label="Customer Reviews">
     <h2>Customer Reviews</h2>
-
-    <form id="review-form" aria-label="Submit a review">
-      <label for="reviewer-name">Name:</label>
-      <input type="text" id="reviewer-name" name="reviewer-name" required placeholder="Your name" />
-
-      <label for="star-rating">Rating:</label>
-      <div class="star-rating" role="radiogroup" aria-label="Star rating">
-        <button type="button" data-star="1" aria-label="1 star">&#9733;</button>
-        <button type="button" data-star="2" aria-label="2 stars">&#9733;</button>
-        <button type="button" data-star="3" aria-label="3 stars">&#9733;</button>
-        <button type="button" data-star="4" aria-label="4 stars">&#9733;</button>
-        <button type="button" data-star="5" aria-label="5 stars">&#9733;</button>
-      </div>
-
-      <label for="review-text">Review:</label>
-      <textarea id="review-text" name="review-text" required placeholder="Write your review here..."></textarea>
-
+    <div id="reviews-list"></div>
+    <!-- REVIEW FORM -->
+    <form id="review-form" style="max-width:600px; margin: 1rem auto; background:#1a1a1a; padding:1rem; border-radius:8px; box-shadow:0 0 20px #ff003c;">
+      <h3>Add a Review</h3>
+      <input type="text" id="reviewer-name" placeholder="Your name" required style="width:100%; margin-bottom:0.5rem;"/>
+      <select id="review-rating" required style="width:100%; margin-bottom:0.5rem;">
+        <option value="" disabled selected>Rating (1 to 5)</option>
+        <option value="1">1 ⭐</option>
+        <option value="2">2 ⭐⭐</option>
+        <option value="3">3 ⭐⭐⭐</option>
+        <option value="4">4 ⭐⭐⭐⭐</option>
+        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+      </select>
+      <textarea id="review-text" rows="3" placeholder="Your review" required style="width:100%; margin-bottom:0.5rem;"></textarea>
       <button type="submit">Submit Review</button>
     </form>
-
-    <div id="reviews-list" aria-live="polite" aria-relevant="additions"></div>
   </section>
 
   <!-- CONTACT -->
   <section id="contact" aria-label="Contact Information">
     <h2>Contact</h2>
     <div class="contact-info">
-      Email: contact@football101.com.au<br />
-      Phone: +61 412 345 678<br />
-      Address: 123 Soccer St, Sydney, Australia<br />
+      <p><strong>Phone:</strong> +61 400 123 456</p>
+      <p><strong>Address:</strong> 123 Football St, Sydney, NSW, Australia</p>
+      <p><strong>Email:</strong> contact@football101.com.au</p>
     </div>
   </section>
 
@@ -542,39 +523,51 @@
     <h2>Your Cart</h2>
     <div id="cart-items"></div>
     <div id="cart-total">Total: $0.00</div>
-    <form id="checkout-form" aria-label="Checkout form">
-      <input type="text" id="fullname" name="fullname" placeholder="Full Name" required />
-      <input type="email" id="email" name="email" placeholder="Email Address" required />
+    <form id="checkout-form">
+      <input type="text" id="full-name" placeholder="Full Name" required />
+      <input type="email" id="email" placeholder="Email Address" required />
+      <input type="tel" id="phone" placeholder="Phone Number" required />
+      <input type="text" id="address" placeholder="Home Address" required />
       <button type="submit">Checkout</button>
     </form>
   </section>
 </main>
 
+<!-- MUSIC PLAYER CONTROL -->
+<div id="music-control" aria-label="Play/Pause music" role="button" tabindex="0" title="Play/Pause Music">
+  <svg id="music-icon" viewBox="0 0 24 24">
+    <polygon id="play-icon" points="6,4 20,12 6,20" style="display: block;"></polygon>
+    <g id="pause-icon" style="display: none;">
+      <rect x="6" y="4" width="4" height="16"></rect>
+      <rect x="14" y="4" width="4" height="16"></rect>
+    </g>
+  </svg>
+</div>
+
+<!-- AUDIO (Royalty free Afro Jazz Loop) -->
+<audio id="bg-music" loop preload="auto" muted>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_3dd49df31d.mp3?filename=afro-jazz-loop-16318.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
 <script>
-  // INTRO SCREEN FADE OUT
-  window.onload = () => {
+  // INTRO SCREEN DISMISS
+  window.addEventListener('load', () => {
     setTimeout(() => {
-      document.getElementById('intro').style.opacity = '0';
-      setTimeout(() => {
-        document.getElementById('intro').style.display = 'none';
-      }, 1000);
-    }, 2500);
-  };
+      document.getElementById('intro').style.display = 'none';
+    }, 4000);
+  });
 
-  // NAVIGATION SWITCHER
+  // NAVIGATION
   const navLinks = document.querySelectorAll('#nav-links a');
-  const sections = document.querySelectorAll('main section');
-
+  const sections = document.querySelectorAll('main > section');
   navLinks.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
       const target = link.getAttribute('data-target');
-
       sections.forEach(sec => {
-        sec.classList.remove('active');
-        if (sec.id === target) sec.classList.add('active');
+        sec.classList.toggle('active', sec.id === target);
       });
-
       navLinks.forEach(l => l.classList.remove('active'));
       link.classList.add('active');
     });
@@ -582,232 +575,344 @@
 
   // PRODUCTS DATA
   const boots = [
-    { id: 'boot1', name: 'Nike Phantom GX 2 Club', price: 79.99, img: 'https://www.rebelsport.com.au/on/demandware.static/-/Sites-master-catalog/default/dwc665d58e/images/hi-res/M69570901.jpg' },
-    { id: 'boot2', name: 'Nike Phantom 6 Low Elite LV8 FG', price: 249.99, img: 'https://www.rebelsport.com.au/on/demandware.static/-/Sites-master-catalog/default/dw0661a730/images/hi-res/M71357201.jpg' },
-    { id: 'boot3', name: 'Adidas Predator Edge FG', price: 219.95, img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/0f50783d8045443b9173adad010c2f88_9366/Predator_Edge_FG_Shoes_White_GZ0424_01_standard.jpg' },
-    { id: 'boot4', name: 'Nike Phantom GX Elite FG', price: 229.95, img: 'https://cdn.rebelsport.com.au/product/nike-phantom-gx-elite-fg-football-boots-M71357200.jpg' },
-    { id: 'boot5', name: 'Adidas X Speedflow Messi.1 FG', price: 329.95, img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/af90818ccca6465a81f8ad9b01043a98_9366/X_Speedflow_Messi.1_FG_Shoes_Black_GZ7559_01_standard.jpg' },
-    { id: 'boot6', name: 'Puma Ultra 1.3 FG/AG', price: 299.95, img: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa/global/106412/01/sv01/fnd/EEA/fmt/png' }
+    {
+      name: 'Nike Phantom GX Low Elite LV8 FG',
+      price: 200,
+      img: 'https://cdn1.ozone.ru/multimedia/wc1200/1008402583.jpg',
+      sizes: ['6', '7', '8', '9', '10', '11']
+    },
+    {
+      name: 'Nike Phantom GX 2 Club Kids',
+      price: 140,
+      img: 'https://cdn3.ozone.ru/multimedia/wc1200/1008340288.jpg',
+      sizes: ['3', '4', '5', '6', '7']
+    },
+    {
+      name: 'Adidas Predator 20.3 FG',
+      price: 220,
+      img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/f71e18f1f3db495bb6f6ae3d00e58d67_9366/Predator_20.3_FG_Black_FY3193_01_standard.jpg',
+      sizes: ['6', '7', '8', '9', '10']
+    },
+    {
+      name: 'Puma Future Z 3.2 FG',
+      price: 210,
+      img: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa/global/106052/01/sv01/fnd/PNA/fmt/png',
+      sizes: ['5', '6', '7', '8', '9']
+    },
+    {
+      name: 'Mizuno Morelia Neo III',
+      price: 180,
+      img: 'https://cdn.sneakerstudio.pl/i/mizuno-morelia-neo-iii-beta-md-black-white-d1ga217365-0.jpg',
+      sizes: ['6', '7', '8', '9', '10', '11']
+    },
+    {
+      name: 'Under Armour Clone Pro 2.0 FG',
+      price: 190,
+      img: 'https://underarmour.scene7.com/is/image/Underarmour/3023708-001_DEFAULT?wid=500&hei=500&qlt=80&fmt=webp',
+      sizes: ['7', '8', '9', '10', '11']
+    }
   ];
+
   const jerseys = [
-    { id: 'jersey1', name: 'Manchester United Home Jersey', price: 120.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://assets.manutd.com/AssetPicker/images/0/0/14/108322014/108322014_w1200h1200.jpg' },
-    { id: 'jersey2', name: 'Arsenal Away Jersey', price: 110.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://cdn.shopify.com/s/files/1/0285/9512/0009/products/arsenal-kit-22-23-16_f496a5b2-6bdf-46a6-9afc-04ec8f6eb31b_1000x.jpg' },
-    { id: 'jersey3', name: 'Chelsea Third Jersey', price: 115.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://cdn.shopify.com/s/files/1/0275/9491/7562/products/Chelsea-Third-Kit_1200x.jpg' },
-    { id: 'jersey4', name: 'Liverpool Home Jersey', price: 125.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://cdn.shopify.com/s/files/1/0566/1307/2123/products/liverpool-home-jersey.png' },
-    { id: 'jersey5', name: 'Real Madrid Away Jersey', price: 130.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://assets.realmadrid.com/images/2022/07/14/real-madrid-away-kit-2022-23.jpg' },
-    { id: 'jersey6', name: 'Barcelona Third Jersey', price: 128.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://cdn.shopify.com/s/files/1/0267/5804/2259/products/barcelona-third-kit-2022-23_1200x.jpg' }
+    {
+      name: 'Liverpool Home Jersey',
+      price: 120,
+      img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/eb8f092c837b45a9a418ae6c0147982a_9366/Liverpool_Home_Jersey_Red_GP8231_01_laydown.jpg',
+      sizes: ['S', 'M', 'L', 'XL']
+    },
+    {
+      name: 'Manchester United Away Jersey',
+      price: 110,
+      img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/c8e08bfc091447b7b36ea8d0015f12ae_9366/Manchester_United_Away_Jersey_Black_GP9017_01_laydown.jpg',
+      sizes: ['S', 'M', 'L', 'XL']
+    },
+    {
+      name: 'Chelsea Third Jersey',
+      price: 115,
+      img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/4e4ed14d484e43e28b22af5600fda44f_9366/Chelsea_Third_Jersey_Blue_GP9123_01_laydown.jpg',
+      sizes: ['S', 'M', 'L', 'XL']
+    },
+    {
+      name: 'Arsenal Home Jersey',
+      price: 125,
+      img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/99fa4ac1cefa4d258093aa52012451e1_9366/Arsenal_Home_Jersey_Red_GP9178_01_laydown.jpg',
+      sizes: ['S', 'M', 'L', 'XL']
+    },
+    {
+      name: 'Barcelona Home Jersey',
+      price: 130,
+      img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/1e7c12f7d9b84cc4a7c1a9fa00f6e6b9_9366/Barcelona_Home_Jersey_Blue_GP8813_01_laydown.jpg',
+      sizes: ['S', 'M', 'L', 'XL']
+    },
+    {
+      name: 'Juventus Away Jersey',
+      price: 115,
+      img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/7e65a1d98a4b4c8d85a3a7a900dd1226_9366/Juventus_Away_Jersey_White_GP9126_01_laydown.jpg',
+      sizes: ['S', 'M', 'L', 'XL']
+    }
   ];
+
   const balls = [
-    { id: 'ball1', name: 'Nike Flight Soccer Ball', price: 49.99, img: 'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/7b96b2f8-41f7-4176-8a66-f3c7a476d2c3/nike-flight-soccer-ball-HzPQXF.jpg' },
-    { id: 'ball2', name: 'Adidas Uniforia League', price: 59.99, img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/3b667b7799c0485f839aad3900a54c18_9366/Uniforia_League_Ball_Black_FY2190_01_standard.jpg' },
-    { id: 'ball3', name: 'Puma Team Final 21.5', price: 44.99, img: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa/global/083775/03/sv01/fnd/EEA/fmt/png' },
-    { id: 'ball4', name: 'Select Numero 10', price: 54.99, img: 'https://www.select-sport.com/media/catalog/product/cache/1/image/600x600/9df78eab33525d08d6e5fb8d27136e95/n/u/numero_10_football_540.jpg' },
-    { id: 'ball5', name: 'Mitre Delta Hyperseam', price: 39.99, img: 'https://cdn.shopify.com/s/files/1/0509/3699/6820/products/mitre-delta-hyperseam-football-2021-blk-white-red-sr-600x600_600x600.jpg' },
-    { id: 'ball6', name: 'Wilson Traditional Soccer Ball', price: 45.00, img: 'https://www.wilson.com/globalassets/soccer/balls/traditional-trn_ball.jpg' }
+    {
+      name: 'Adidas Finale Ball',
+      price: 90,
+      img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/d210bdc417984390ac49aaf40088c8b8_9366/Finale_Official_Match_Ball_White_FS0429_01_standard.jpg',
+    },
+    {
+      name: 'Nike Flight Ball',
+      price: 85,
+      img: 'https://images.nike.com/is/image/DotCom/daed6e17-85f2-4d31-a2a4-8836fa8ff9bb_686x686.png',
+    },
+    {
+      name: 'Puma Final 21.1 Ball',
+      price: 80,
+      img: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa/global/083912/03/sv01/fmt/png',
+    },
+    {
+      name: 'Select Numero 10 Ball',
+      price: 75,
+      img: 'https://cdn.select-sport.com/media/wysiwyg/Select-Numero10-2017-football-ball-FOOT-3400.jpg',
+    },
+    {
+      name: 'Mitre Delta Max Ball',
+      price: 70,
+      img: 'https://cdn.sportsshoes.com/productimages/V2_1_1200_1200_18062W_mitre-delta-max-football.jpg',
+    },
+    {
+      name: 'Wilson Traditional Ball',
+      price: 65,
+      img: 'https://images.wilson.com/volleyballs/wilson-traditional-volleyball-wt5500.jpg',
+    }
   ];
 
   // RENDER PRODUCTS FUNCTION
-  function renderProducts(containerId, products, withSize = false) {
+  function renderProducts(list, containerId, isBootOrJersey = false) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
-    products.forEach(product => {
+    list.forEach((item, index) => {
       const card = document.createElement('div');
-      card.classList.add('product-card');
+      card.className = 'product-card';
       card.innerHTML = `
-        <img src="${product.img}" alt="${product.name}" />
-        <h3>${product.name}</h3>
-        <p>$${product.price.toFixed(2)}</p>
-        ${withSize ? `<select aria-label="Select size for ${product.name}" data-product-id="${product.id}">
-          ${product.sizes.map(s => `<option value="${s}">${s}</option>`).join('')}
-        </select>` : ''}
-        <button data-product-id="${product.id}">Add to Cart</button>
+        <img src="${item.img}" alt="${item.name}" />
+        <h3>${item.name}</h3>
+        <p>$${item.price.toFixed(2)}</p>
+        ${
+          isBootOrJersey
+            ? `<label for="${containerId}-size-${index}">Size:</label>
+               <select id="${containerId}-size-${index}" aria-label="Select size for ${item.name}">
+                 ${item.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
+               </select>`
+            : ''
+        }
+        <button aria-label="Add ${item.name} to cart" data-type="${containerId}" data-index="${index}">Add to Cart</button>
       `;
       container.appendChild(card);
     });
   }
 
-  renderProducts('boots-list', boots);
-  renderProducts('jerseys-list', jerseys, true);
-  renderProducts('balls-list', balls);
+  // Initialize product lists
+  renderProducts(boots, 'boots-list', true);
+  renderProducts(jerseys, 'jerseys-list', true);
+  renderProducts(balls, 'balls-list', false);
 
-  // CART LOGIC
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  // CART MANAGEMENT
+  let cart = [];
 
-  function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartCount();
-    renderCartItems();
-  }
+  const cartCountEl = document.getElementById('cart-count');
+  const cartItemsEl = document.getElementById('cart-items');
+  const cartTotalEl = document.getElementById('cart-total');
+
   function updateCartCount() {
-    document.getElementById('cart-count').textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
+    cartCountEl.textContent = cart.length;
   }
-  function renderCartItems() {
-    const container = document.getElementById('cart-items');
-    container.innerHTML = '';
+  function updateCartTotal() {
+    const total = cart.reduce((acc, item) => acc + item.price, 0);
+    cartTotalEl.textContent = `Total: $${total.toFixed(2)}`;
+  }
+
+  function renderCart() {
+    cartItemsEl.innerHTML = '';
     if (cart.length === 0) {
-      container.textContent = 'Your cart is empty.';
-      document.getElementById('cart-total').textContent = 'Total: $0.00';
+      cartItemsEl.innerHTML = '<p>Your cart is empty.</p>';
+      updateCartCount();
+      updateCartTotal();
       return;
     }
-    let total = 0;
-    cart.forEach(item => {
-      const product = [...boots, ...jerseys, ...balls].find(p => p.id === item.id);
-      if (!product) return;
-      total += product.price * item.quantity;
+    cart.forEach((item, i) => {
       const div = document.createElement('div');
-      div.classList.add('cart-item');
+      div.className = 'cart-item';
       div.innerHTML = `
         <div class="cart-item-info">
-          <strong>${product.name}</strong> ${item.size ? '(' + item.size + ')' : ''}
-          <br />$${product.price.toFixed(2)} x ${item.quantity}
+          <strong>${item.name}</strong> - $${item.price.toFixed(2)}${item.size ? ` - Size: ${item.size}` : ''}
         </div>
-        <div class="cart-item-qty">
-          <button aria-label="Decrease quantity for ${product.name}" data-id="${item.id}" data-size="${item.size || ''}" data-action="decrease">-</button>
-          <button aria-label="Increase quantity for ${product.name}" data-id="${item.id}" data-size="${item.size || ''}" data-action="increase">+</button>
-          <button aria-label="Remove ${product.name} from cart" data-id="${item.id}" data-size="${item.size || ''}" data-action="remove" style="color:#ff003c; font-weight:900;">x</button>
-        </div>
+        <button aria-label="Remove ${item.name} from cart" data-index="${i}" class="remove-cart-item">Remove</button>
       `;
-      container.appendChild(div);
+      cartItemsEl.appendChild(div);
     });
-    document.getElementById('cart-total').textContent = `Total: $${total.toFixed(2)}`;
-  }
+    updateCartCount();
+    updateCartTotal();
 
-  // ADD TO CART BUTTONS
-  function setupAddToCartButtons() {
-    document.querySelectorAll('.product-card button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-product-id');
-        let size = null;
-        if (btn.previousElementSibling && btn.previousElementSibling.tagName === 'SELECT') {
-          size = btn.previousElementSibling.value;
+    // Remove buttons
+    document.querySelectorAll('.remove-cart-item').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const idx = parseInt(e.target.getAttribute('data-index'));
+        if (!isNaN(idx)) {
+          cart.splice(idx, 1);
+          renderCart();
         }
-        const existingIndex = cart.findIndex(i => i.id === id && i.size === size);
-        if (existingIndex !== -1) {
-          cart[existingIndex].quantity++;
-        } else {
-          cart.push({ id, quantity: 1, size });
-        }
-        saveCart();
-        alert('Added to cart!');
       });
     });
   }
-  setupAddToCartButtons();
 
-  // CART ITEM BUTTONS (INCREASE, DECREASE, REMOVE)
-  document.getElementById('cart-items').addEventListener('click', e => {
-    if (!e.target.matches('button')) return;
-    const id = e.target.getAttribute('data-id');
-    const size = e.target.getAttribute('data-size') || null;
-    const action = e.target.getAttribute('data-action');
-    if (!id || !action) return;
+  // ADD TO CART HANDLER
+  document.querySelectorAll('.products').forEach(container => {
+    container.addEventListener('click', e => {
+      if (e.target.tagName === 'BUTTON') {
+        const type = e.target.getAttribute('data-type');
+        const index = parseInt(e.target.getAttribute('data-index'));
+        let product;
+        if (type === 'boots-list') product = boots[index];
+        else if (type === 'jerseys-list') product = jerseys[index];
+        else if (type === 'balls-list') product = balls[index];
 
-    // Find correct cart item by id + size
-    const idx = cart.findIndex(i => i.id === id && i.size === size);
-    if (idx === -1) return;
+        if (!product) return;
 
-    if (action === 'increase') {
-      cart[idx].quantity++;
-    } else if (action === 'decrease') {
-      cart[idx].quantity--;
-      if (cart[idx].quantity <= 0) cart.splice(idx, 1);
-    } else if (action === 'remove') {
-      cart.splice(idx, 1);
-    }
-    saveCart();
+        let size = null;
+        if (type === 'boots-list' || type === 'jerseys-list') {
+          const sizeSelect = document.getElementById(`${type}-size-${index}`);
+          if (sizeSelect) size = sizeSelect.value;
+        }
+
+        cart.push({
+          name: product.name,
+          price: product.price,
+          size: size,
+        });
+
+        alert(`Added ${product.name} ${size ? '(' + size + ')' : ''} to cart.`);
+        renderCart();
+      }
+    });
   });
 
-  // CHECKOUT FORM SUBMISSION
-  document.getElementById('checkout-form').addEventListener('submit', e => {
+  renderCart();
+
+  // CHECKOUT FORM SUBMISSION (just reset form and show alert)
+  const checkoutForm = document.getElementById('checkout-form');
+  checkoutForm.addEventListener('submit', e => {
     e.preventDefault();
     if (cart.length === 0) {
-      alert('Your cart is empty.');
+      alert('Your cart is empty!');
       return;
     }
-    alert(`Thank you for your purchase, ${e.target.fullname.value}!`);
+    alert('Thank you for your purchase! We will contact you soon.');
     cart = [];
-    saveCart();
-    e.target.reset();
-    // Go back to home after purchase
-    document.querySelector('nav ul li a[data-target="home"]').click();
+    renderCart();
+    checkoutForm.reset();
   });
 
-  // REVIEWS FUNCTIONALITY
+  // REVIEWS LOGIC
+  let reviews = [
+    { name: 'John Doe', rating: 5, text: 'Awesome boots and service!' },
+    { name: 'Jane Smith', rating: 4, text: 'Great jerseys, love the quality.' }
+  ];
+
+  const reviewsListEl = document.getElementById('reviews-list');
   const reviewForm = document.getElementById('review-form');
-  const reviewsList = document.getElementById('reviews-list');
-  const starButtons = reviewForm.querySelectorAll('.star-rating button');
-  let currentStarRating = 0;
+  const reviewerNameInput = document.getElementById('reviewer-name');
+  const reviewRatingSelect = document.getElementById('review-rating');
+  const reviewTextInput = document.getElementById('review-text');
 
-  function renderStars(rating) {
-    let stars = '';
-    for(let i=1; i<=5; i++) {
-      stars += i <= rating ? '&#9733;' : '&#9734;';
-    }
-    return stars;
-  }
-
-  function displayReviews() {
-    const reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
-    if(reviews.length === 0) {
-      reviewsList.innerHTML = '<p>No reviews yet. Be the first to review!</p>';
+  function renderReviews() {
+    reviewsListEl.innerHTML = '';
+    if (reviews.length === 0) {
+      reviewsListEl.innerHTML = '<p>No reviews yet.</p>';
       return;
     }
-    reviewsList.innerHTML = '';
-    reviews.forEach(r => {
+    reviews.forEach((rev, i) => {
       const div = document.createElement('div');
-      div.classList.add('review-card');
+      div.className = 'review-card';
       div.innerHTML = `
-        <div class="reviewer-name">${escapeHTML(r.name)}</div>
-        <div class="review-stars">${renderStars(r.rating)}</div>
-        <div class="review-text">${escapeHTML(r.text)}</div>
+        <button class="remove-review-btn" aria-label="Remove review by ${rev.name}" data-index="${i}">&times;</button>
+        <div class="reviewer-name">${rev.name}</div>
+        <div class="review-stars">${'⭐'.repeat(rev.rating)}</div>
+        <div class="review-text">"${rev.text}"</div>
       `;
-      reviewsList.appendChild(div);
+      reviewsListEl.appendChild(div);
     });
-  }
-  function escapeHTML(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
 
-  // Star rating buttons logic
-  starButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      currentStarRating = parseInt(btn.getAttribute('data-star'));
-      starButtons.forEach(b => {
-        b.classList.toggle('selected', parseInt(b.getAttribute('data-star')) <= currentStarRating);
+    // Add remove event listeners
+    document.querySelectorAll('.remove-review-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const idx = parseInt(e.target.getAttribute('data-index'));
+        if (!isNaN(idx)) {
+          reviews.splice(idx, 1);
+          renderReviews();
+        }
       });
     });
-  });
+  }
 
-  // Submit review form
+  renderReviews();
+
   reviewForm.addEventListener('submit', e => {
     e.preventDefault();
-    const name = e.target['reviewer-name'].value.trim();
-    const text = e.target['review-text'].value.trim();
-    if (currentStarRating === 0) {
-      alert('Please select a star rating.');
+    const name = reviewerNameInput.value.trim();
+    const rating = parseInt(reviewRatingSelect.value);
+    const text = reviewTextInput.value.trim();
+
+    if (!name || !rating || !text) {
+      alert('Please fill in all review fields.');
       return;
     }
-    if (!name || !text) {
-      alert('Please fill out all fields.');
-      return;
-    }
-
-    const reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
-    reviews.push({ name, rating: currentStarRating, text });
-    localStorage.setItem('reviews', JSON.stringify(reviews));
-
-    e.target.reset();
-    currentStarRating = 0;
-    starButtons.forEach(b => b.classList.remove('selected'));
-    displayReviews();
-    alert('Thank you for your review!');
+    reviews.push({ name, rating, text });
+    renderReviews();
+    reviewForm.reset();
   });
 
-  // Initial render
-  displayReviews();
-  saveCart();
+  // MUSIC PLAYER LOGIC
+  const bgMusic = document.getElementById('bg-music');
+  const musicControl = document.getElementById('music-control');
+  const playIcon = document.getElementById('play-icon');
+  const pauseIcon = document.getElementById('pause-icon');
+
+  // Autoplay muted, then unmute on play
+  window.addEventListener('load', () => {
+    bgMusic.play().catch(() => {});
+  });
+
+  function updateMusicIcon(isPlaying) {
+    if (isPlaying) {
+      playIcon.style.display = 'none';
+      pauseIcon.style.display = 'block';
+    } else {
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+    }
+  }
+
+  musicControl.addEventListener('click', () => {
+    if (bgMusic.paused) {
+      bgMusic.muted = false;
+      bgMusic.play();
+      updateMusicIcon(true);
+    } else {
+      bgMusic.pause();
+      updateMusicIcon(false);
+    }
+  });
+
+  // Keyboard accessibility for music control
+  musicControl.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      musicControl.click();
+    }
+  });
+
+  // Initially show play icon since music starts muted
+  updateMusicIcon(!bgMusic.paused && !bgMusic.muted);
+
 </script>
 
 </body>
