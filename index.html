@@ -584,17 +584,26 @@
   const boots = [
     { id: 'boot1', name: 'Nike Phantom GX 2 Club', price: 79.99, img: 'https://www.rebelsport.com.au/on/demandware.static/-/Sites-master-catalog/default/dwc665d58e/images/hi-res/M69570901.jpg' },
     { id: 'boot2', name: 'Nike Phantom 6 Low Elite LV8 FG', price: 249.99, img: 'https://www.rebelsport.com.au/on/demandware.static/-/Sites-master-catalog/default/dw0661a730/images/hi-res/M71357201.jpg' },
-    { id: 'boot3', name: 'Adidas Predator Edge FG', price: 219.95, img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/0f50783d8045443b9173adad010c2f88_9366/Predator_Edge_FG_Shoes_White_GZ0424_01_standard.jpg' }
+    { id: 'boot3', name: 'Adidas Predator Edge FG', price: 219.95, img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/0f50783d8045443b9173adad010c2f88_9366/Predator_Edge_FG_Shoes_White_GZ0424_01_standard.jpg' },
+    { id: 'boot4', name: 'Nike Phantom GX Elite FG', price: 229.95, img: 'https://cdn.rebelsport.com.au/product/nike-phantom-gx-elite-fg-football-boots-M71357200.jpg' },
+    { id: 'boot5', name: 'Adidas X Speedflow Messi.1 FG', price: 329.95, img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/af90818ccca6465a81f8ad9b01043a98_9366/X_Speedflow_Messi.1_FG_Shoes_Black_GZ7559_01_standard.jpg' },
+    { id: 'boot6', name: 'Puma Ultra 1.3 FG/AG', price: 299.95, img: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa/global/106412/01/sv01/fnd/EEA/fmt/png' }
   ];
   const jerseys = [
     { id: 'jersey1', name: 'Manchester United Home Jersey', price: 120.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://assets.manutd.com/AssetPicker/images/0/0/14/108322014/108322014_w1200h1200.jpg' },
     { id: 'jersey2', name: 'Arsenal Away Jersey', price: 110.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://cdn.shopify.com/s/files/1/0285/9512/0009/products/arsenal-kit-22-23-16_f496a5b2-6bdf-46a6-9afc-04ec8f6eb31b_1000x.jpg' },
-    { id: 'jersey3', name: 'Chelsea Third Jersey', price: 115.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://cdn.shopify.com/s/files/1/0275/9491/7562/products/Chelsea-Third-Kit_1200x.jpg' }
+    { id: 'jersey3', name: 'Chelsea Third Jersey', price: 115.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://cdn.shopify.com/s/files/1/0275/9491/7562/products/Chelsea-Third-Kit_1200x.jpg' },
+    { id: 'jersey4', name: 'Liverpool Home Jersey', price: 125.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://cdn.shopify.com/s/files/1/0566/1307/2123/products/liverpool-home-jersey.png' },
+    { id: 'jersey5', name: 'Real Madrid Away Jersey', price: 130.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://assets.realmadrid.com/images/2022/07/14/real-madrid-away-kit-2022-23.jpg' },
+    { id: 'jersey6', name: 'Barcelona Third Jersey', price: 128.00, sizes: ['S', 'M', 'L', 'XL'], img: 'https://cdn.shopify.com/s/files/1/0267/5804/2259/products/barcelona-third-kit-2022-23_1200x.jpg' }
   ];
   const balls = [
     { id: 'ball1', name: 'Nike Flight Soccer Ball', price: 49.99, img: 'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/7b96b2f8-41f7-4176-8a66-f3c7a476d2c3/nike-flight-soccer-ball-HzPQXF.jpg' },
     { id: 'ball2', name: 'Adidas Uniforia League', price: 59.99, img: 'https://assets.adidas.com/images/w_600,f_auto,q_auto/3b667b7799c0485f839aad3900a54c18_9366/Uniforia_League_Ball_Black_FY2190_01_standard.jpg' },
-    { id: 'ball3', name: 'Puma Team Final 21.5', price: 44.99, img: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa/global/083775/03/sv01/fnd/EEA/fmt/png' }
+    { id: 'ball3', name: 'Puma Team Final 21.5', price: 44.99, img: 'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa/global/083775/03/sv01/fnd/EEA/fmt/png' },
+    { id: 'ball4', name: 'Select Numero 10', price: 54.99, img: 'https://www.select-sport.com/media/catalog/product/cache/1/image/600x600/9df78eab33525d08d6e5fb8d27136e95/n/u/numero_10_football_540.jpg' },
+    { id: 'ball5', name: 'Mitre Delta Hyperseam', price: 39.99, img: 'https://cdn.shopify.com/s/files/1/0509/3699/6820/products/mitre-delta-hyperseam-football-2021-blk-white-red-sr-600x600_600x600.jpg' },
+    { id: 'ball6', name: 'Wilson Traditional Soccer Ball', price: 45.00, img: 'https://www.wilson.com/globalassets/soccer/balls/traditional-trn_ball.jpg' }
   ];
 
   // RENDER PRODUCTS FUNCTION
@@ -653,9 +662,9 @@
           <br />$${product.price.toFixed(2)} x ${item.quantity}
         </div>
         <div class="cart-item-qty">
-          <button aria-label="Decrease quantity for ${product.name}" data-id="${item.id}" data-action="decrease">-</button>
-          <button aria-label="Increase quantity for ${product.name}" data-id="${item.id}" data-action="increase">+</button>
-          <button aria-label="Remove ${product.name} from cart" data-id="${item.id}" data-action="remove" style="color:#ff003c; font-weight:900;">x</button>
+          <button aria-label="Decrease quantity for ${product.name}" data-id="${item.id}" data-size="${item.size || ''}" data-action="decrease">-</button>
+          <button aria-label="Increase quantity for ${product.name}" data-id="${item.id}" data-size="${item.size || ''}" data-action="increase">+</button>
+          <button aria-label="Remove ${product.name} from cart" data-id="${item.id}" data-size="${item.size || ''}" data-action="remove" style="color:#ff003c; font-weight:900;">x</button>
         </div>
       `;
       container.appendChild(div);
@@ -664,32 +673,37 @@
   }
 
   // ADD TO CART BUTTONS
-  document.querySelectorAll('.product-card button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-product-id');
-      let size = null;
-      if (btn.previousElementSibling && btn.previousElementSibling.tagName === 'SELECT') {
-        size = btn.previousElementSibling.value;
-      }
-      const existingIndex = cart.findIndex(i => i.id === id && i.size === size);
-      if (existingIndex !== -1) {
-        cart[existingIndex].quantity++;
-      } else {
-        cart.push({ id, quantity: 1, size });
-      }
-      saveCart();
-      alert('Added to cart!');
+  function setupAddToCartButtons() {
+    document.querySelectorAll('.product-card button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-product-id');
+        let size = null;
+        if (btn.previousElementSibling && btn.previousElementSibling.tagName === 'SELECT') {
+          size = btn.previousElementSibling.value;
+        }
+        const existingIndex = cart.findIndex(i => i.id === id && i.size === size);
+        if (existingIndex !== -1) {
+          cart[existingIndex].quantity++;
+        } else {
+          cart.push({ id, quantity: 1, size });
+        }
+        saveCart();
+        alert('Added to cart!');
+      });
     });
-  });
+  }
+  setupAddToCartButtons();
 
   // CART ITEM BUTTONS (INCREASE, DECREASE, REMOVE)
   document.getElementById('cart-items').addEventListener('click', e => {
     if (!e.target.matches('button')) return;
     const id = e.target.getAttribute('data-id');
+    const size = e.target.getAttribute('data-size') || null;
     const action = e.target.getAttribute('data-action');
     if (!id || !action) return;
 
-    const idx = cart.findIndex(i => i.id === id);
+    // Find correct cart item by id + size
+    const idx = cart.findIndex(i => i.id === id && i.size === size);
     if (idx === -1) return;
 
     if (action === 'increase') {
@@ -796,4 +810,5 @@
   saveCart();
 </script>
 
-</body></html>
+</body>
+</html>
